@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Patient track</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- Your custom styles go here -->
+    <style>
+        body {
+            padding-top: 56px;
+        }
+
+        @media (min-width: 768px) {
+            body {
+                padding-top: 60px;
+            }
+        }
+
+        /* Define your custom styles for the side menu */
+        .side-menu {
+            background-color: #007bff;
+            color: #fff;
+            height: 100%;
+            position: fixed;
+            left: 0;
+            width: 250px;
+            padding-top: 56px; /* Adjusted for top bar height */
+        }
+
+        .side-menu a {
+            padding: 15px;
+            text-decoration: none;
+            color: #fff;
+            display: block;
+        }
+
+        /* Adjust the left margin to accommodate the side menu */
+        .content {
+            margin-left: 250px; /* Equal to the width of the side menu */
+            padding: 15px;
+        }
+
+        /* Add more styling as needed */
+    </style>
+</head>
+
+<body>
+
+<!-- Top Bar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">PatienTrack</a>
+
+        <!-- Buttons on the right -->
+        <div class="navbar-collapse justify-content-end">
+            <ul class="navbar-nav">
+                <!-- Dropdown with profile, logout, and change password -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        Dropdown
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="{% url 'authentication:logout' %}">Logout</a></li>
+                        <li><a class="dropdown-item" href="{% url 'authentication:profile' %}">Profile</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="{% url 'authentication:password_change' %}">Change Password</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Side Menu -->
+<div class="side-menu">
+    <a href="#">Menu Item 1</a>
+    <a href="#">Menu Item 2</a>
+    <a href="#">Menu Item 3</a>
+    <!-- Add more menu items as needed -->
+</div>
+
+<!-- Page Content -->
+<div class="content">
+    <div class="container-fluid">
+        <!-- Your Django content goes here -->
+        <h2>Main Content</h2>
+        <p>This is where your Django views will be rendered.</p>
+    </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+
+</html>

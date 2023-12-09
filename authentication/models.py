@@ -12,6 +12,7 @@ class User(AbstractUser):
     is_patient = models.BooleanField(_('is patient'), default=False)
     facility = models.ForeignKey('facility.Facility', related_name='facility_user_set', verbose_name=_('facility'),
                                  null=True, on_delete=models.SET_NULL)
+    email_checked = models.BooleanField(null=True)
 
     def __str__(self):
         return str(self.email)

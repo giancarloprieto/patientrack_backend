@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+from email.header import Header
+from email.utils import formataddr
 
 from dotenv import load_dotenv
 from django.utils.translation import gettext_lazy as _
@@ -44,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.forms',
     'authentication.apps.AuthenticationConfig',
     'device.apps.DeviceConfig',
     'facility.apps.FacilityConfig',
@@ -53,6 +56,7 @@ INSTALLED_APPS = [
     'report.apps.ReportConfig',
     'staff.apps.StaffConfig',
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -69,7 +73,7 @@ ROOT_URLCONF = 'patientrack.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -83,6 +87,8 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'patientrack.wsgi.application'
+
+FORM_RENDERER = 'django.forms.renderers.TemplatesSetting'
 
 
 # Database
@@ -123,8 +129,8 @@ AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
 AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME")
 AWS_REGION_NAME = 'us-east-1'
 
-DEFAULT_FILE_STORAGE = 'customized.storages.backends.s3boto3.S3Boto3Storage'
-STATICFILES_STORAGE = 'customized.storages.backends.s3boto3.S3Boto3StoragePublic'
+DEFAULT_FILE_STORAGE = 'main.s3boto3.S3Boto3Storage'
+STATICFILES_STORAGE = 'main.s3boto3.S3Boto3StoragePublic'
 
 MEDIA_FILETYPE = ['.pdf', '.png', '.jpg']
 STATICFILES_DIRS = [
@@ -155,6 +161,14 @@ LANGUAGE_COOKIE_NAME = 'pt_lang'
 
 STATIC_URL = '/static/'
 
+EMAIL_HOST = os.getenv("EMAIL_HOST")
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
+DEFAULT_FROM_EMAIL = formataddr((str(Header('PatienTrack'.encode(), 'utf-8')), "patientrack.rpm@gmail.com"))
+
 LOGIN_URL = '/authentication/login/'
-LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = '/authentication/login/'
+LOGIN_REDIRECT_URL = 'monitoring:detail'
+LOGOUT_REDIRECT_URL = 'authentication:login'
