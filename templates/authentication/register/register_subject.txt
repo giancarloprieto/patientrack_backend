@@ -1,0 +1,2 @@
+{% load i18n %}
+{% trans 'Email address verification request' %}  | {% now 'D, d F o - P' %}
