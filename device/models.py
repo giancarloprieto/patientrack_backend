@@ -14,7 +14,7 @@ class Variable(AbstractAuditModel):
 
 class Sensor(AbstractAuditModel):
     name = models.CharField(_('name'), max_length=100)
-    manufacturer = models.CharField(_('name'), max_length=100)
+    manufacturer = models.CharField(_('manufacturer'), max_length=100)
     variable = models.ForeignKey('device.Variable', related_name='variable_sensor_set', verbose_name=_('variable'),
                                  on_delete=models.CASCADE)
 
@@ -24,7 +24,7 @@ class Sensor(AbstractAuditModel):
 
 class DeviceType(AbstractAuditModel):
     name = models.CharField(_('name'), max_length=100)
-    manufacturer = models.CharField(_('name'), max_length=100)
+    manufacturer = models.CharField(_('manufacturer'), max_length=100)
     sensors = models.ManyToManyField('device.Sensor', related_name='sensor_device_type_set',
                                      verbose_name=_('sensors'))
 

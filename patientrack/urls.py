@@ -18,6 +18,7 @@ urlpatterns += i18n_patterns(
     path('', RedirectView.as_view(url=reverse_lazy('monitoring:detail'), permanent=False), name='home'),
     path('admin/', admin.site.urls),
     path('authentication/', include(authentication_patterns, namespace='authentication')),
-    path('monitoring/', include('monitoring.urls'))
+    path('monitoring/', include('monitoring.urls')),
+    path('patient/', include('patient.urls'))
 
 )

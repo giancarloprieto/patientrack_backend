@@ -1,3 +1,7 @@
 from django.contrib import admin
+from followup.models import FollowUp
+class FollowUpAdmin(admin.ModelAdmin):
+    pass
 
-# Register your models here.
+
+admin.site.register(FollowUp, FollowUpAdmin)

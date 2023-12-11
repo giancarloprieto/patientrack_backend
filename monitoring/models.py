@@ -17,7 +17,7 @@ class AlarmSettings(AbstractAuditModel):
                                  verbose_name=_('variable'), on_delete=models.CASCADE)
     reference_value = models.FloatField(_("reference value"))
     name = models.CharField(_("name"), max_length=100)
-    operator = models.CharField(_('gender'), choices=get_model_choices(Operator))
+    operator = models.CharField(_('operator'), choices=get_model_choices(Operator))
 
     def __str__(self):
         return self.name
