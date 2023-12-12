@@ -1,8 +1,10 @@
 from django.contrib.auth.mixins import PermissionRequiredMixin as OriginalPermissionRequiredMixin, LoginRequiredMixin, \
     AccessMixin
+from django.db.models import Q
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import DeleteView, FormView, CreateView, UpdateView, DetailView, ListView
 
+from main.forms import SearchForm
 from main.messages import DeleteSuccessMessageMixin, SuccessMessageMixin
 
 
@@ -56,7 +58,26 @@ class StaffDetailView(LoginRequiredMixin, StaffRequiredMixin,
 
 class StaffListView(LoginRequiredMixin, StaffRequiredMixin,
                     PermissionRequiredMixin, ListView):
-    pass
+    search_fields = []
+    paginate_by = 100
+
+    def get_queryset(self):
+        self.queryset = super().get_queryset()
+        search_query = self.request.GET.get('search')
+        if search_query:
+            or_conditions = [Q(**{f'{field}__icontains': search_query}) for field in self.search_fields]
+            query = or_conditions.pop()
+            for condition in or_conditions:
+                query |= condition
+
+            self.queryset = self.queryset.filter(query)
+
+        return super().get_queryset()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['search_form'] = SearchForm(self.request.GET)
+        return context
 
 
 class StaffDeleteView(DeleteSuccessMessageMixin, LoginRequiredMixin, StaffRequiredMixin,

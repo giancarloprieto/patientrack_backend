@@ -8,7 +8,7 @@ class AbstractAuditModel(models.Model):
     created_at = models.DateTimeField(_('created at'), auto_now_add=True)
     created_by = models.EmailField(_('created by'), blank=True, null=True, )
     last_updated_at = models.DateTimeField(_('last updated'), auto_now=True)
-    last_updated_by = models.EmailField(_('created by'), blank=True, null=True, )
+    last_updated_by = models.EmailField(_('last updated by'), blank=True, null=True, )
 
     class Meta:
         abstract = True

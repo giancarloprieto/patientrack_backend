@@ -1,0 +1,70 @@
+{% extends 'index.html' %}
+{% load static i18n %}
+{% block content %}
+    <div class="container mt-4">
+        <h2>{% block list_header %}{% endblock %}</h2>
+        <div class="mb-4">
+            <form method="get" action="" class="form-inline">
+                <div class="form-group">
+                    {{ search_form.search }}
+                </div>
+                <button type="submit" class="btn btn-primary ml-2">Search</button>
+            </form>
+        </div>
+
+
+        <div class="card-deck">
+            {% for obj in page_obj %}
+                <div class="card mb-4">
+                    <div class="card-body">
+                        {% block obj_content %}
+                            <h5 class="card-title">{{ patient.first_name }} {{ patient.last_name }}</h5>
+                            <p class="card-text">Status: {{ patient.get_status_display }}</p>
+                            <p class="card-text">Admission Date: {{ patient.admission_date }}</p>
+                            <p class="card-text">Attending Staff:
+                                {% for staff in patient.attending_staff.all %}{{ staff.first_name }}
+                                    {{ staff.last_name }}
+                                    , {% endfor %}</p>
+                        {% endblock %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+            <nav aria-label="Page navigation">
+            <ul class="pagination">
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page=1" aria-label="First">
+                            <span aria-hidden="true">&laquo;&laquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                {% endif %}
+
+                {% for page_num in page_obj.paginator.page_range %}
+                    <li class="page-item{% if page_num == page_obj.number %} active{% endif %}">
+                        <a class="page-link" href="?page={{ page_num }}">{{ page_num }}</a>
+                    </li>
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Last">
+                            <span aria-hidden="true">&raquo;&raquo;</span>
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+
+{% endblock %}
