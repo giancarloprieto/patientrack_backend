@@ -28,7 +28,7 @@ class PatientListView(StaffListView):
 class PatientCreateView(StaffCreateView):
     model = Patient
     template_name = 'patient/create.html'
-    permission_required = 'patient.list'
+    permission_required = 'patient.add'
     form_class = PatientForm
     success_url = reverse_lazy('patient:list')
 
