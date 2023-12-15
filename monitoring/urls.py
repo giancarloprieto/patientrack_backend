@@ -1,9 +1,9 @@
 from django.urls import path
 
-from monitoring.views import DashboardView
+from monitoring.views import MonitoringView
 
 app_name = 'monitoring'
 
 urlpatterns = [
-    path('', DashboardView.as_view(), name='detail')
+    path('', MonitoringView.as_view(), name='list')
 ]

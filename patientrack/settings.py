@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'device.apps.DeviceConfig',
     'facility.apps.FacilityConfig',
     'followup.apps.FollowupConfig',
+    'main.apps.MainConfig',
     'monitoring.apps.MonitoringConfig',
     'patient.apps.PatientConfig',
     'report.apps.ReportConfig',
@@ -172,3 +173,20 @@ DEFAULT_FROM_EMAIL = formataddr((str(Header('PatienTrack'.encode(), 'utf-8')), "
 LOGIN_URL = '/authentication/login/'
 LOGIN_REDIRECT_URL = 'monitoring:detail'
 LOGOUT_REDIRECT_URL = 'authentication:login'
+
+if DEBUG:
+    LOGGING = {
+        'version': 1,
+        'disable_existing_loggers': False,
+        'handlers': {
+            'console': {
+                'class': 'logging.StreamHandler',
+            },
+        },
+        'loggers': {
+            'django.db.backends': {
+                'handlers': ['console'],
+                'level': 'DEBUG',
+            },
+        },
+    }

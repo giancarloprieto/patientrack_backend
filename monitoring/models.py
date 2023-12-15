@@ -41,9 +41,9 @@ class Record(AbstractAuditModel):
     value = models.FloatField(_("value"))
     payload = models.TextField(_("payload"))
     alarm_settings_fk = models.ForeignKey(AlarmSettings, related_name='alarm_settings_record_set',
-                                          verbose_name=_('alarm settings'), null=True,
+                                          verbose_name=_('alarm settings'), null=True, blank=True,
                                           on_delete=models.SET_NULL)
-    alarm_name = models.CharField(_("alarm's name"), default="")
-    alarm_operator = models.CharField(_("alarm's operator"), default="",
+    alarm_name = models.CharField(_("alarm's name"), default="",  blank=True)
+    alarm_operator = models.CharField(_("alarm's operator"), default="", blank=True,
                                       choices=get_model_choices(AlarmSettings.Operator))
-    alarm_ref_value = models.FloatField(_("reference value"), null=True)
+    alarm_ref_value = models.FloatField(_("reference value"), null=True, blank=True)
