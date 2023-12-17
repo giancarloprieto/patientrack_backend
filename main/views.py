@@ -32,7 +32,24 @@ class PermissionRequiredMixin(OriginalPermissionRequiredMixin):
         return True
 
 
+class BaseDetailView(DetailView):
+    serializer_class = None
+    sections = None
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if getattr(self, 'serializer_class'):
+            context['object_data'] = self.serializer_class(self.object).data
+        if getattr(self, 'sections'):
+            context['sections'] = self.sections
+        return context
+
+
 class LoggedFormView(SuccessMessageMixin, LoginRequiredMixin, FormView):
+    success_message = None
+
+
+class LoggedDetailView(LoginRequiredMixin, BaseDetailView):
     success_message = None
 
 
@@ -52,17 +69,8 @@ class StaffUpdateView(SuccessMessageMixin, LoginRequiredMixin, StaffRequiredMixi
 
 
 class StaffDetailView(LoginRequiredMixin, StaffRequiredMixin,
-                      PermissionRequiredMixin, DetailView):
-    serializer_class = None
-    sections = None
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        if getattr(self, 'serializer_class'):
-            context['object_data'] = self.serializer_class(self.object).data
-        if getattr(self, 'sections'):
-            context['sections'] = self.sections
-        return context
+                      PermissionRequiredMixin, BaseDetailView):
+    pass
 
 
 class StaffListView(LoginRequiredMixin, StaffRequiredMixin,

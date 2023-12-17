@@ -1,74 +1,77 @@
 {% extends 'index.html' %}
 {% load static i18n %}
-{%  block content %}
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <form method="post" action="" enctype="multipart/form-data">
-                {% csrf_token %}
-                <div class="form-group">
-                    <label>Picture:</label>
-                    <div>
-                        <div class="d-flex justify-content-center mb-4">
-                            <img id="selectedAvatar" src="
+{% block content %}
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <form method="post" action="" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label>Picture:</label>
+                        <div>
+                            <div class="d-flex justify-content-center mb-4">
+                                <img id="selectedAvatar" src="
 
-                                    {% if object.picture %}{{ object.picture.url }}{% else %}https://mdbootstrap.com/img/Photos/Others/placeholder-avatar.jpg{% endif %}"
-                                 class="rounded-circle" style="width: 200px; height: 200px; object-fit: cover;"
-                                 alt="example placeholder"/>
-                        </div>
-                        <div class="d-flex justify-content-center">
-                            <div class="btn btn-primary btn-rounded">
-                                <input type="file" class="form-control d-none" name="picture"
-                                       id="picture"
-                                       onchange="displaySelectedImage(event, 'selectedAvatar')"/>
-                                <label class="form-label text-white m-1" for="picture">Choose file</label>
 
+                                        {% if object.picture %}{{ object.picture.url }}{% else %}https://mdbootstrap.com/img/Photos/Others/placeholder-avatar.jpg{% endif %}"
+                                     class="rounded-circle" style="width: 200px; height: 200px; object-fit: cover;"
+                                     alt="example placeholder"/>
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <div class="btn btn-primary btn-rounded">
+                                    <input type="file" class="form-control d-none" name="picture"
+                                           id="picture"
+                                           onchange="displaySelectedImage(event, 'selectedAvatar')"/>
+                                    <label class="form-label text-white m-1" for="picture">Choose file</label>
+
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                </div>
-                <div class="form-group">
-                    <label for="username">Username:</label>
-                    <input type="text" class="form-control" id="username" name="username"
-                           value="{{ object.username }}" disabled
-                           placeholder="Enter your username">
-                </div>
-                <div class="form-group">
-                    <label for="first name">First Name:</label>
-                    <input type="text" class="form-control" id="first_name" name="first_name"
-                           {% if object.first_name %}value="{{ object.first_name }}"{% endif %}
-                           placeholder="Enter your first name">
-                </div>
-                <div class="form-group">
-                    <label for="last name">Last Name:</label>
-                    <input type="text" class="form-control" id="last_name" name="last_name"
-                           {% if object.last_name %}value="{{ object.last_name }}"{% endif %}
-                           placeholder="Enter your last name">
-                </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
-                {% if form.errors %}
-                    {{ form.errors }}
-                {% endif %}
-            </form>
+                    </div>
+                    <div class="form-group">
+                        <label for="username">Username:</label>
+                        <input type="text" class="form-control" id="username" name="username"
+                               value="{{ object.username }}" disabled
+                               placeholder="Enter your username">
+                    </div>
+                    <div class="form-group">
+                        <label for="first name">First Name:</label>
+                        <input type="text" class="form-control" id="first_name" name="first_name"
+                               {% if object.first_name %}value="{{ object.first_name }}"{% endif %}
+                               placeholder="Enter your first name">
+                    </div>
+                    <div class="form-group">
+                        <label for="last name">Last Name:</label>
+                        <input type="text" class="form-control" id="last_name" name="last_name"
+                               {% if object.last_name %}value="{{ object.last_name }}"{% endif %}
+                               placeholder="Enter your last name">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    {% if form.errors %}
+                        {{ form.errors }}
+                    {% endif %}
+                </form>
+            </div>
         </div>
     </div>
-</div>
 {% endblock %}
 
-{%  block module_js %}
-function displaySelectedImage(event, elementId) {
-    const selectedImage = document.getElementById(elementId);
-    const fileInput = event.target;
+{% block module_js %}
+    <script>
+        function displaySelectedImage(event, elementId) {
+            const selectedImage = document.getElementById(elementId);
+            const fileInput = event.target;
 
-    if (fileInput.files && fileInput.files[0]) {
-        const reader = new FileReader();
+            if (fileInput.files && fileInput.files[0]) {
+                const reader = new FileReader();
 
-        reader.onload = function(e) {
-            selectedImage.src = e.target.result;
-        };
+                reader.onload = function (e) {
+                    selectedImage.src = e.target.result;
+                };
 
-        reader.readAsDataURL(fileInput.files[0]);
-    }
-}
+                reader.readAsDataURL(fileInput.files[0]);
+            }
+        }
+    </script>
 {% endblock %}

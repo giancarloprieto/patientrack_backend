@@ -1,0 +1,67 @@
+{% extends 'index.html' %}
+{% load static i18n custom_filters %}
+{% block content %}
+    <div class="container mt-4">
+        {% for section, fields in sections.items %}
+            <div class="card mb-4">
+                <div class="card-header">
+                    {{ section }}
+                </div>
+                <div class="card-body">
+                    <dl class="row">
+                        {% for field in fields %}
+                            <dt class="col-sm-2">{{ object|verbose_attr:field }}</dt>
+                            <dd class="col-sm-4">{{ object_data|get_item:field }}</dd>
+                        {% endfor %}
+                    </dl>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="card mb-4">
+        <div class="card-header">
+            Monitoring
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                {%  for id in variables_data.keys %}
+                <div id="chart{{ id|safe }}" style="width: 900px; height: 500px"></div>
+                {%  endfor %}
+            </dl>
+        </div>
+    </div>
+
+{% endblock %}
+{% block head_js %}
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+{% endblock %}
+{% block module_js %}
+    <script>
+        google.charts.load('current', {'packages': ['line']});
+        {%  for id, info in variables_data.items %}
+            google.charts.setOnLoadCallback(drawChart{{ id|safe }});
+            function drawChart{{ id|safe }}() {
+
+            var data = new google.visualization.DataTable();
+            data.addColumn('date', 'Fecha Hora');
+            data.addColumn('number', '{{ info.unit|safe }}');
+
+            data.addRows({{ info.data|safe }});
+
+            var options = {
+                chart: {
+                    title: '{{ info.name|safe }}',
+                    subtitle: '{{ info.unit|safe }}'
+                },
+                width: 900,
+                height: 500
+            };
+
+            var chart = new google.charts.Line(document.getElementById('chart{{ id|safe }}'));
+
+            chart.draw(data, google.charts.Line.convertOptions(options));
+        }
+        {%  endfor %}
+
+    </script>
+{% endblock %}

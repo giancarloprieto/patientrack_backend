@@ -20,6 +20,10 @@
                                         {% endif %}
                                     {% endwith %}
                                 {% endfor %}
+                                <a type="button" class="btn btn-primary"
+                                        href="{% url 'monitoring:detail'  patient.id%}">
+                                    Details
+                                </a>
                                 {% if patient.alarms %}
                                     <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                             data-bs-target="#alarmsModal{{ patient.id }}">
@@ -37,7 +41,7 @@
                                                             aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    {%  for record in patient.alarms %}
+                                                    {% for record in patient.alarms %}
                                                         {{ record.alarm_name }}  {{ record.value }}
                                                     {% endfor %}
                                                 </div>
