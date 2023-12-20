@@ -24,11 +24,25 @@
         </div>
         <div class="card-body">
             <dl class="row">
-                {%  for id in variables_data.keys %}
-                <div id="chart{{ id|safe }}" style="width: 900px; height: 500px"></div>
-                {%  endfor %}
+                {% for id in variables_data.keys %}
+                    <div id="chart{{ id|safe }}" style="width: 900px; height: 500px"></div>
+                {% endfor %}
             </dl>
         </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            Alarmas
+        </div>
+            <div class="card-body">
+            <dl class="row">
+                {% for alarm in alarms %}
+                    <dt class="col-sm-12">{{ alarm.datetime_device }} {{ alarm.alarm_name }} {{ alarm.value }}, Referencia {{ alarm.alarm_operator }} {{ alarm.alarm_ref_value }}</dt>
+                {% endfor %}
+            </dl>
+        </div>
+
     </div>
 
 {% endblock %}
@@ -42,25 +56,25 @@
             google.charts.setOnLoadCallback(drawChart{{ id|safe }});
             function drawChart{{ id|safe }}() {
 
-            var data = new google.visualization.DataTable();
-            data.addColumn('date', 'Fecha Hora');
-            data.addColumn('number', '{{ info.unit|safe }}');
+                var data = new google.visualization.DataTable();
+                data.addColumn('date', 'Fecha Hora');
+                data.addColumn('number', '{{ info.unit|safe }}');
 
-            data.addRows({{ info.data|safe }});
+                data.addRows({{ info.data|safe }});
 
-            var options = {
-                chart: {
-                    title: '{{ info.name|safe }}',
-                    subtitle: '{{ info.unit|safe }}'
-                },
-                width: 900,
-                height: 500
-            };
+                var options = {
+                    chart: {
+                        title: '{{ info.name|safe }}',
+                        subtitle: '{{ info.unit|safe }}'
+                    },
+                    width: 450,
+                    height: 250
+                };
 
-            var chart = new google.charts.Line(document.getElementById('chart{{ id|safe }}'));
+                var chart = new google.charts.Line(document.getElementById('chart{{ id|safe }}'));
 
-            chart.draw(data, google.charts.Line.convertOptions(options));
-        }
+                chart.draw(data, google.charts.Line.convertOptions(options));
+            }
         {%  endfor %}
 
     </script>

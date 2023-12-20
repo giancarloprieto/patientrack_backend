@@ -171,7 +171,7 @@ EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 DEFAULT_FROM_EMAIL = formataddr((str(Header('PatienTrack'.encode(), 'utf-8')), "patientrack.rpm@gmail.com"))
 
 LOGIN_URL = '/authentication/login/'
-LOGIN_REDIRECT_URL = 'monitoring:detail'
+LOGIN_REDIRECT_URL = 'monitoring:list'
 LOGOUT_REDIRECT_URL = 'authentication:login'
 
 if DEBUG:
