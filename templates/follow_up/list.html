@@ -1,0 +1,12 @@
+{% extends 'base_list.html' %}
+{% load static i18n %}
+{% block list_header %}{% trans 'Patients list' %}{% endblock %}
+{% block obj_content %}
+    <h5 class="card-title"><a href="{% url 'patient:detail' obj.pk %}">{{ obj.first_name }} {{ obj.last_name }}</a></h5>
+    <p class="card-text">Status: {{ obj.get_status_display }}</p>
+    <p class="card-text">Admission Date: {{ obj.admission_date }}</p>
+    <p class="card-text">Attending Staff:
+        {% for staff in obj.attending_staff.all %}{{ staff.first_name }} {{ staff.last_name }}
+            , {% endfor %}</p>
+    <a href="{% url 'patient:update' obj.pk %}" class="btn btn-primary">Update</a>
+{% endblock %}

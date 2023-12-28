@@ -1,3 +1,59 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404
+from django.urls import reverse_lazy, reverse
 
-# Create your views here.
+from followup.forms import FollowUpForm
+from followup.models import FollowUp
+from main.views import StaffListView, StaffCreateView, StaffUpdateView
+from patient.models import Patient
+
+
+class FollowUpListView(StaffListView):
+    model = FollowUp
+    template_name = 'follow_up/list.html'
+    permission_required = 'followup.list'
+    search_fields = ['created_by', 'comment']
+    ordering = '-created_at'
+
+    def get_queryset(self):
+        # if self.request.user.is_staff:
+        #     queryset = self.model.objects.filter(attending_staff__user=self.request.user)
+        # else:
+        #     queryset = self.model.objects.all()
+        self.queryset = self.model.objects.filter(patient=self.kwargs.get('patient_id'))
+        return super().get_queryset()
+
+
+class FollowUpCreateView(StaffCreateView):
+    model = FollowUp
+    template_name = 'follow_up/form.html'
+    permission_required = 'followup.add'
+    form_class = FollowUpForm
+
+    def form_valid(self, form):
+        patient_id = self.kwargs['patient_id']
+        patient = get_object_or_404(Patient, pk=patient_id)
+        form.instance.patient = patient
+        form.instance.created_by = self.request.user.email
+        response = super().form_valid(form)
+        return response
+
+    def get_success_url(self):
+        patient_id = self.kwargs['patient_id']
+        return reverse('monitoring:detail', kwargs={'pk': patient_id})
+
+
+class FollowUpUpdateView(StaffUpdateView):
+    model = FollowUp
+    template_name = 'follow_up/form.html'
+    permission_required = 'followup.change'
+    form_class = FollowUpForm
+    success_url = reverse_lazy('patient:list')
+    
+    def get_queryset(self):
+        self.queryset = self.model.objects.filter(patient_id=self.kwargs['patient_id'],
+                                                  created_by=self.request.user.email)
+        return super().get_queryset()
+
+    def get_success_url(self):
+        patient_id = self.kwargs['patient_id']
+        return reverse('monitoring:detail', kwargs={'pk': patient_id})

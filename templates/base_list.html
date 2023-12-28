@@ -15,19 +15,14 @@
 
         <div class="card-deck">
             {% for obj in page_obj %}
+                {% block list_content %}
                 <div class="card mb-4">
                     <div class="card-body">
                         {% block obj_content %}
-                            <h5 class="card-title">{{ patient.first_name }} {{ patient.last_name }}</h5>
-                            <p class="card-text">Status: {{ patient.get_status_display }}</p>
-                            <p class="card-text">Admission Date: {{ patient.admission_date }}</p>
-                            <p class="card-text">Attending Staff:
-                                {% for staff in patient.attending_staff.all %}{{ staff.first_name }}
-                                    {{ staff.last_name }}
-                                    , {% endfor %}</p>
                         {% endblock %}
                     </div>
                 </div>
+                {% endblock %}
             {% endfor %}
         </div>
             <nav aria-label="Page navigation">

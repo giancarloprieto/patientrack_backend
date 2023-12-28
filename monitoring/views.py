@@ -8,6 +8,7 @@ from monitoring.models import Record
 from monitoring.utils import get_records_data_for_chart
 from patient.models import Patient
 from patient.serializers import PatientSerializer
+from staff.models import Staff
 
 
 # Create your views here.
@@ -72,12 +73,35 @@ class PatientMonitoringView(LoggedDetailView):
                 }
         return variables_data
 
+    def get_follow_up_data(self):
+        entries = FollowUp.objects.filter(patient=self.object).order_by('-created_at')[:50]
+        staff = Staff.objects.filter(user__email__in=entries.values('created_by')).select_related('user')
+        staff_dict = {st.user.email: {'name': str(st), 'picture_url': st.user.picture.url if st.user.picture else None}
+                      for st in staff}
+        entries_data = []
+        for entry in entries:
+            if entry.created_by in staff_dict:
+                staff_name = staff_dict[entry.created_by]['name']
+                staff_picture = staff_dict[entry.created_by]['picture_url']
+            else:
+                staff_name = entry.created_by
+                staff_picture = None
+            entries_data.append(
+                {'id': entry.id,
+                 'comment': entry.comment,
+                 'created_at': entry.created_at,
+                 'staff_name': staff_name,
+                 'staff_picture': staff_picture,
+                 'edit': entry.created_by == self.request.user.email}
+            )
+        return entries_data
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
         context['variables_data'] = self.get_variables_data()
         context['alarms'] = Record.objects.filter(patient=self.object,
-                                                  datetime_device__gte=self.datetime_48_hours_ago).\
+                                                  datetime_device__gte=self.datetime_48_hours_ago). \
             exclude(alarm_name="").order_by('-datetime_device')
-        context['follow_up'] = FollowUp.objects.filter(patient=self.object).order_by('-created_by')
+        context['follow_up'] = self.get_follow_up_data()
         return context

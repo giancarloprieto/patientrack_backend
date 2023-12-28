@@ -32,18 +32,52 @@
     </div>
 
     <div class="card mb-4">
+    <div class="card-header">
+        Alarmas
+    </div>
+    <div class="card-body">
+        <dl class="row">
+            {% for alarm in alarms %}
+                <dt class="col-sm-12">{{ alarm.datetime_device }} {{ alarm.alarm_name }} {{ alarm.value }},
+                    Referencia {{ alarm.alarm_operator }} {{ alarm.alarm_ref_value }}</dt>
+            {% endfor %}
+        </dl>
+    </div>
+
+    <div class="card mb-4">
         <div class="card-header">
-            Alarmas
+            Seguimiento
+            <a href="{% url 'followup:create' patient_id=object.id %}"
+               class="btn btn-sm btn-primary float-right">Create</a>
         </div>
-            <div class="card-body">
+        <div class="card-body">
             <dl class="row">
-                {% for alarm in alarms %}
-                    <dt class="col-sm-12">{{ alarm.datetime_device }} {{ alarm.alarm_name }} {{ alarm.value }}, Referencia {{ alarm.alarm_operator }} {{ alarm.alarm_ref_value }}</dt>
+                {% for entry in follow_up %}
+                    <div class="col-md-12 mb-3">
+                        <span style="color: #888; font-size: 12px;">({{ entry.created_at|date:"Y-m-d H:i:s" }})</span>
+                        <img src="
+
+                                {% if entry.staff_picture %}{{ entry.staff_picture }}{% else %}https://mdbootstrap.com/img/Photos/Others/placeholder-avatar.jpg{% endif %}"
+                             alt="{{ entry.staff_name }}"
+                             style="width: 50px; height: 50px; border-radius: 50%; margin-right: 10px;">
+                        <span>
+                        <strong>{{ entry.staff_name }}</strong>:
+                        {{ entry.comment }}
+                    </span>
+                        {% if entry.edit %}
+                            <a href="{% url 'followup:update' patient_id=object.id pk=entry.id %}"
+                               class="btn btn-sm btn-info ml-2">Edit</a>
+
+                            {#                        <a href="{% url 'followup:delete' patient_id=patient.id pk=entry.id %}"#}
+                            {#                           class="btn btn-sm btn-danger ml-2">Delete</a>#}
+                        {% endif %}
+                    </div>
                 {% endfor %}
             </dl>
         </div>
-
     </div>
+
+
 
 {% endblock %}
 {% block head_js %}
@@ -67,8 +101,28 @@
                         title: '{{ info.name|safe }}',
                         subtitle: '{{ info.unit|safe }}'
                     },
-                    width: 450,
-                    height: 250
+                    width: 900,
+                    height: 500,
+                    annotations: {
+                        alwaysOutside: true,
+                        textStyle: {
+                            fontSize: 12,
+                            auraColor: 'none',
+                            color: '#FF0000' // Color del texto de la línea de referencia
+                        },
+                        boxStyle: {
+                            // Ajusta aquí la anchura de la línea de referencia
+                            strokeWidth: 1,
+                            // Establece el color de la línea de referencia a rojo
+                            stroke: '#FF0000' // Color de la línea de referencia
+                        },
+                        // Especifica la línea de referencia horizontal
+                        horizontal: {
+                            y: 30, // Ajusta la altura específica en el eje y
+                            color: '#FF0000', // Color de la línea de referencia
+                            strokeWidth: 1 // Ajusta aquí la anchura de la línea de referencia
+                        }
+                    }
                 };
 
                 var chart = new google.charts.Line(document.getElementById('chart{{ id|safe }}'));
