@@ -24,8 +24,8 @@ class MonitoringView(StaffListView):
         datetime_48_hours_ago = timezone.now() - timezone.timedelta(days=365)
         prefetch_list = [Prefetch(
             'patient_record_set',
-            queryset=Record.objects.filter(alarm_name__isnull=False,
-                                           datetime_device__gte=datetime_48_hours_ago).order_by('-datetime_device'),
+            queryset=Record.objects.filter(datetime_device__gte=datetime_48_hours_ago).exclude(alarm_name="").order_by(
+                '-datetime_device'),
             to_attr='alarms'
         )]
 
