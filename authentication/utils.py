@@ -1,23 +1,20 @@
 import os
 
-
-def upload_to(instance, filename):
-    ext = os.path.splitext(filename)[1]
-    return 'users/{id}/profile{ext}'.format(id=instance.id, ext=ext)
-
-
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMultiAlternatives
 from django.template import loader
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 
-from django.contrib.auth.tokens import PasswordResetTokenGenerator
+
+def upload_to(instance, filename):
+    ext = os.path.splitext(filename)[1]
+    return 'users/{id}/profile{ext}'.format(id=instance.id, ext=ext)
 
 
 def send_mail(subject_template_name, email_template_name,
               context, to_email, from_email=None, html_email_template_name=None):
-
     subject = loader.render_to_string(subject_template_name, context)
     # Email subject *must not* contain newlines
     subject = ''.join(subject.splitlines())

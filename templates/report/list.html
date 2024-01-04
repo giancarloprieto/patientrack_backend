@@ -1,0 +1,11 @@
+{% extends 'base_list.html' %}
+{% load static i18n %}
+{% block list_header %}{% trans 'Reports list' %}{% endblock %}
+{% block obj_content %}
+    <h5 class="card-title"><a href="{% url 'report:detail' obj.pk %}">{{ obj.patient.first_name }} {{ obj.patient.last_name }}</a></h5>
+    <p class="card-text">Status: {{ obj.get_status_display }}</p>
+    <p class="card-text">Created by: {{ obj.created_by }}</p>
+    <p class="card-text">Variables:
+        {% for variable in obj.variables.all %}{{ variable.name }}
+            , {% endfor %}</p>
+{% endblock %}

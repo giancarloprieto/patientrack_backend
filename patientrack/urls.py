@@ -20,6 +20,7 @@ urlpatterns += i18n_patterns(
     path('authentication/', include(authentication_patterns, namespace='authentication')),
     path('monitoring/', include('monitoring.urls')),
     path('patient/', include('patient.urls')),
-    path('follow-up/', include('followup.urls'))
+    path('follow-up/', include('followup.urls')),
+    path('report/', include('report.urls'))
 
 )
