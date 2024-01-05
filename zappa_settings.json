@@ -1,0 +1,11 @@
+{
+    "dev": {
+        "aws_region": "us-east-1",
+        "django_settings": "patientrack.settings",
+        "profile_name": "default",
+        "project_name": "patientrack-bac",
+        "runtime": "python3.8",
+        "s3_bucket": "patientrack-zappa",
+        "slim_handler": true
+    }
+}

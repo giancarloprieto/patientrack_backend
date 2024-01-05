@@ -33,7 +33,7 @@ SECRET_KEY = '1ivvzx++&ea0p71l$l08&^e_0=c0%76!(_2f8cmzqmd+d&c%##'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['ewr2dm9n5i.execute-api.us-east-1.amazonaws.com']
 
 AUTH_USER_MODEL = 'authentication.User'
 
@@ -98,10 +98,10 @@ FORM_RENDERER = 'django.forms.renderers.TemplatesSetting'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.getenv("DB_NAME"),
-        "USER": os.getenv("DB_USERNAME"),
-        "PASSWORD": os.getenv("DB_PASSWORD"),
-        "HOST": os.getenv("DB_HOST"),
+        "NAME": os.getenv("DB_NAME", "patientrack"),
+        "USER": os.getenv("DB_USERNAME", "postgres"),
+        "PASSWORD": os.getenv("DB_PASSWORD", "Pr0y3ct0.gr4d0"),
+        "HOST": os.getenv("DB_HOST", "patientrack.cx8g4a684p5e.us-east-1.rds.amazonaws.com"),
         "PORT": os.getenv("DB_PORT", 5432),
         "CONN_MAX_AGE": (5 * 60)
     }
@@ -125,9 +125,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
-AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
-AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME")
+AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID", "AKIA46CXGNTPBGJC4MVR")
+AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY", "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")
+AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME", "patientrack")
 AWS_REGION_NAME = 'us-east-1'
 
 DEFAULT_FILE_STORAGE = 'main.s3boto3.S3Boto3Storage'
