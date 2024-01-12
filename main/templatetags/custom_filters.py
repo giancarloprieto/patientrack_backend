@@ -1,4 +1,5 @@
 from django import template
+from django.core.exceptions import FieldDoesNotExist
 
 register = template.Library()
 
@@ -7,6 +8,10 @@ register = template.Library()
 def get_item(dictionary, key):
     return dictionary.get(key, None)
 
+
 @register.filter(name='verbose_attr')
-def verbose_attribute(object, attibute_name):
-    return object._meta.get_field(attibute_name).verbose_name
+def verbose_attribute(object, attribute_name):
+    try:
+        return object._meta.get_field(attribute_name).verbose_name.capitalize()
+    except FieldDoesNotExist:
+        return attribute_name.replace('_', ' ').capitalize()

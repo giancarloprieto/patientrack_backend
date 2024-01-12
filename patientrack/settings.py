@@ -14,15 +14,14 @@ import os
 from email.header import Header
 from email.utils import formataddr
 
-from dotenv import load_dotenv
 from django.utils.translation import gettext_lazy as _
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 dotenv_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), ".env")
 load_dotenv(dotenv_path)
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
@@ -33,7 +32,7 @@ SECRET_KEY = '1ivvzx++&ea0p71l$l08&^e_0=c0%76!(_2f8cmzqmd+d&c%##'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['ewr2dm9n5i.execute-api.us-east-1.amazonaws.com']
+ALLOWED_HOSTS = ['localhost', 'ewr2dm9n5i.execute-api.us-east-1.amazonaws.com']
 
 AUTH_USER_MODEL = 'authentication.User'
 
@@ -57,7 +56,6 @@ INSTALLED_APPS = [
     'report.apps.ReportConfig',
     'staff.apps.StaffConfig',
 ]
-
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -90,7 +88,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'patientrack.wsgi.application'
 
 FORM_RENDERER = 'django.forms.renderers.TemplatesSetting'
-
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
@@ -138,7 +135,6 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "patientrack", "static_source", "static"),
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
@@ -155,7 +151,6 @@ LANGUAGES = [
 ]
 LANG_SUPPORTED = dict(LANGUAGES).keys()
 LANGUAGE_COOKIE_NAME = 'pt_lang'
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/

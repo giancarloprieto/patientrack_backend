@@ -35,6 +35,7 @@ class PermissionRequiredMixin(OriginalPermissionRequiredMixin):
 class BaseDetailView(DetailView):
     serializer_class = None
     sections = None
+    special_labels = None
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -42,6 +43,8 @@ class BaseDetailView(DetailView):
             context['object_data'] = self.serializer_class(self.object).data
         if getattr(self, 'sections'):
             context['sections'] = self.sections
+        if getattr(self, 'special_labels'):
+            context['special_labels'] = self.special_labels
         return context
 
 
