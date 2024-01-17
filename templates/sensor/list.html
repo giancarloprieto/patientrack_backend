@@ -1,0 +1,9 @@
+{% extends 'base_list.html' %}
+{% load static i18n %}
+{% block list_header %}{% trans 'Sensor list' %}{% endblock %}
+{% block obj_content %}
+    <h5 class="card-title">{{ obj.name }}</h5>
+    <p class="card-text">Manufacturer: {{ obj.manufacturer }}</p>
+    <p class="card-text">Variable: {{ obj.variable.name }}</p>
+    <a href="{% url 'device:sensor_update' obj.pk %}" class="btn btn-primary">Update</a>
+{% endblock %}

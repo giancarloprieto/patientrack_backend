@@ -1,0 +1,9 @@
+{% extends 'base_list.html' %}
+{% load static i18n %}
+{% block list_header %}{% trans 'Device list' %}{% endblock %}
+{% block obj_content %}
+    <h5 class="card-title"><a href="{% url 'device:detail' obj.pk %}">{{ obj.identifier }}</a></h5>
+    <p class="card-text">Patient: {{ obj.patient.first_name }} {{ obj.patient.last_name }}</p>
+    <p class="card-text">Type: {{ obj.device_type.name }}</p>
+    <a href="{% url 'device:update' obj.pk %}" class="btn btn-primary">Update</a>
+{% endblock %}

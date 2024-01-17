@@ -1,0 +1,8 @@
+{% extends 'base_list.html' %}
+{% load static i18n %}
+{% block list_header %}{% trans 'Variables list' %}{% endblock %}
+{% block obj_content %}
+    <h5 class="card-title">{{ obj.name }}</h5>
+    <p class="card-text">Unit: {{ obj.unit }}</p>
+    <a href="{% url 'device:variable_update' obj.pk %}" class="btn btn-primary">Update</a>
+{% endblock %}

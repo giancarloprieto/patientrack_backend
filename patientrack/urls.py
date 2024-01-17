@@ -22,6 +22,7 @@ urlpatterns += i18n_patterns(
     path('patient/', include('patient.urls')),
     path('staff/', include('staff.urls')),
     path('follow-up/', include('followup.urls')),
-    path('report/', include('report.urls'))
+    path('report/', include('report.urls')),
+    path('device/', include('device.urls'))
 
 )
