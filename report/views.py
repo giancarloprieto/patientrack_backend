@@ -12,7 +12,7 @@ from report.serializers import RecordReportSerializer
 class RecordReportCreateView(StaffCreateView):
     model = RecordReport
     template_name = 'report/form.html'
-    permission_required = 'report.add'
+    permission_required = 'report.add_report'
     form_class = RecordReportForm
 
     def get_success_url(self):
@@ -28,13 +28,13 @@ class RecordReportCreateView(StaffCreateView):
 class RecordReportListView(StaffListView):
     model = RecordReport
     template_name = 'report/list.html'
-    permission_required = 'report.list'
+    permission_required = 'report.view_report'
     search_fields = ['created_by', 'patient__first_name', 'patient__last_name']
 
 
 class RecordReportDetailView(StaffDetailView):
     model = RecordReport
     template_name = 'report/detail.html'
-    permission_required = 'report.view'
+    permission_required = 'report.view_report'
     serializer_class = RecordReportSerializer
     sections = {'Report Status': ['created_by', 'created_at', 'patient', 'variables', 'status', 'file', 'error']}

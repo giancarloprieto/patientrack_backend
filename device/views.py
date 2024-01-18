@@ -9,14 +9,14 @@ from main.views import StaffListView, StaffCreateView, StaffUpdateView, StaffDet
 class VariableListView(StaffListView):
     model = Variable
     template_name = 'variable/list.html'
-    permission_required = 'variable.list'
+    permission_required = 'device.view_variable'
     search_fields = ['name']
 
 
 class VariableCreateView(StaffCreateView):
     model = Variable
     template_name = 'variable/form.html'
-    permission_required = 'variable.add'
+    permission_required = 'device.add_variable'
     form_class = VariableForm
     success_url = reverse_lazy('device:variable_list')
 
@@ -24,7 +24,7 @@ class VariableCreateView(StaffCreateView):
 class VariableUpdateView(StaffUpdateView):
     model = Variable
     template_name = 'variable/form.html'
-    permission_required = 'variable.change'
+    permission_required = 'device.change_variable'
     form_class = VariableForm
     success_url = reverse_lazy('device:variable_list')
 
@@ -32,7 +32,7 @@ class VariableUpdateView(StaffUpdateView):
 class SensorListView(StaffListView):
     model = Sensor
     template_name = 'sensor/list.html'
-    permission_required = 'sensor.list'
+    permission_required = 'device.view_sensor'
     search_fields = ['name']
 
     def get_queryset(self):
@@ -43,7 +43,7 @@ class SensorListView(StaffListView):
 class SensorCreateView(StaffCreateView):
     model = Sensor
     template_name = 'sensor/form.html'
-    permission_required = 'sensor.add'
+    permission_required = 'device.add_sensor'
     form_class = SensorForm
     success_url = reverse_lazy('device:sensor_list')
 
@@ -51,7 +51,7 @@ class SensorCreateView(StaffCreateView):
 class SensorUpdateView(StaffUpdateView):
     model = Sensor
     template_name = 'sensor/form.html'
-    permission_required = 'sensor.change'
+    permission_required = 'device.change_sensor'
     form_class = SensorForm
     success_url = reverse_lazy('device:sensor_list')
 
@@ -59,7 +59,7 @@ class SensorUpdateView(StaffUpdateView):
 class DeviceTypeListView(StaffListView):
     model = DeviceType
     template_name = 'device_type/list.html'
-    permission_required = 'device_type.list'
+    permission_required = 'device.view_devicetype'
     search_fields = ['name']
 
     def get_queryset(self):
@@ -70,7 +70,7 @@ class DeviceTypeListView(StaffListView):
 class DeviceTypeCreateView(StaffCreateView):
     model = DeviceType
     template_name = 'device_type/form.html'
-    permission_required = 'device_type.add'
+    permission_required = 'device.add_devicetype'
     form_class = DeviceTypeForm
     success_url = reverse_lazy('device:type_list')
 
@@ -78,7 +78,7 @@ class DeviceTypeCreateView(StaffCreateView):
 class DeviceTypeUpdateView(StaffUpdateView):
     model = DeviceType
     template_name = 'device_type/form.html'
-    permission_required = 'device_type.change'
+    permission_required = 'device.change_devicetype'
     form_class = DeviceTypeForm
     success_url = reverse_lazy('device:type_list')
 
@@ -86,7 +86,7 @@ class DeviceTypeUpdateView(StaffUpdateView):
 class DeviceListView(StaffListView):
     model = Device
     template_name = 'device/list.html'
-    permission_required = 'device.list'
+    permission_required = 'device.view_device'
     search_fields = ['name']
 
     def get_queryset(self):
@@ -97,7 +97,7 @@ class DeviceListView(StaffListView):
 class DeviceCreateView(StaffCreateView):
     model = Device
     template_name = 'device/form.html'
-    permission_required = 'device.add'
+    permission_required = 'device.add_device'
     form_class = DeviceForm
     success_url = reverse_lazy('device:list')
 
@@ -105,7 +105,7 @@ class DeviceCreateView(StaffCreateView):
 class DeviceUpdateView(StaffUpdateView):
     model = Device
     template_name = 'device/form.html'
-    permission_required = 'device.change'
+    permission_required = 'device.change_device'
     form_class = DeviceForm
     success_url = reverse_lazy('device:list')
 
@@ -113,7 +113,7 @@ class DeviceUpdateView(StaffUpdateView):
 class DeviceDetailView(StaffDetailView):
     model = Device
     template_name = 'device/detail.html'
-    permission_required = 'device.view'
+    permission_required = 'device.view_device'
     serializer_class = DeviceSerializer
     sections = {'Device information': ['identifier', 'patient', 'device_type', 'sensors']}
 

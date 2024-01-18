@@ -11,7 +11,7 @@ from patient.serializers import PatientSerializer
 class PatientListView(StaffListView):
     model = Patient
     template_name = 'patient/list.html'
-    permission_required = 'patient.list'
+    permission_required = 'patient.view_patient'
     search_fields = ['first_name', 'last_name', 'identification']
 
     def get_queryset(self):
@@ -26,7 +26,7 @@ class PatientListView(StaffListView):
 class PatientCreateView(StaffCreateView):
     model = Patient
     template_name = 'patient/form.html'
-    permission_required = 'patient.add'
+    permission_required = 'patient.add_patient'
     form_class = PatientForm
     success_url = reverse_lazy('patient:list')
 
@@ -34,7 +34,7 @@ class PatientCreateView(StaffCreateView):
 class PatientUpdateView(StaffUpdateView):
     model = Patient
     template_name = 'patient/form.html'
-    permission_required = 'patient.change'
+    permission_required = 'patient.change_patient'
     form_class = PatientForm
     success_url = reverse_lazy('patient:list')
 
@@ -42,7 +42,7 @@ class PatientUpdateView(StaffUpdateView):
 class PatientDetailView(StaffDetailView):
     model = Patient
     template_name = 'patient/detail.html'
-    permission_required = 'patient.view'
+    permission_required = 'patient.view_patient'
     serializer_class = PatientSerializer
     sections = {'personal information': ['first_name', 'last_name', 'identification', 'gender', 'address', 'city'],
                 'contact information': ['contact_number', 'emergency_contact_name', 'emergency_contact_number'],

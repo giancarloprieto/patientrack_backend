@@ -15,7 +15,7 @@ from staff.models import Staff
 
 class MonitoringView(StaffListView):
     template_name = 'monitoring/list.html'
-    permission_required = 'patient.list'
+    permission_required = 'patient.view_patient'
     paginate_by = 100
     model = Patient
     search_fields = ['first_name', 'last_name', 'identification']
@@ -52,7 +52,7 @@ class MonitoringView(StaffListView):
 class PatientMonitoringView(LoggedDetailView):
     model = Patient
     template_name = 'monitoring/detail.html'
-    permission_required = 'patient.view'
+    permission_required = 'patient.view_patient'
     serializer_class = PatientSerializer
     sections = {'patient information': ['first_name', 'last_name', 'identification', 'gender', 'address', 'city',
                                         'admission_date', 'discharge_date', 'status', 'facility', 'attending_staff',

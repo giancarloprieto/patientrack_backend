@@ -32,7 +32,31 @@ class PermissionRequiredMixin(OriginalPermissionRequiredMixin):
         return True
 
 
-class BaseDetailView(DetailView):
+class MenuActiveMixin:
+    active_tab = None
+    open_menu = None
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        tab = {'active': self.active_tab, 'open': self.open_menu}
+        tabs_map = {'monitoring': ['monitoring'],
+                    'administration': ['patient', 'staff', 'device'],
+                    'report': ['report'],
+                    'reference': ['device_type', 'sensor', 'variable']}
+        if not self.active_tab:
+            for open, active_list in tabs_map.items():
+                for active in active_list:
+                    if active in self.template_name:
+                        tab = {'active': active, 'open': open}
+                        break
+                else:
+                    continue
+                break
+        print('tab', tab)
+        context['tab'] = tab
+        return context
+
+
+class BaseDetailView(MenuActiveMixin, DetailView):
     serializer_class = None
     sections = None
     special_labels = None
@@ -48,7 +72,7 @@ class BaseDetailView(DetailView):
         return context
 
 
-class LoggedFormView(SuccessMessageMixin, LoginRequiredMixin, FormView):
+class LoggedFormView(SuccessMessageMixin, LoginRequiredMixin, MenuActiveMixin, FormView):
     success_message = None
 
 
@@ -57,17 +81,17 @@ class LoggedDetailView(LoginRequiredMixin, BaseDetailView):
 
 
 class StaffFormView(SuccessMessageMixin, LoginRequiredMixin, StaffRequiredMixin,
-                    PermissionRequiredMixin, FormView):
+                    PermissionRequiredMixin, MenuActiveMixin, FormView):
     success_message = None
 
 
 class StaffCreateView(SuccessMessageMixin, LoginRequiredMixin, StaffRequiredMixin,
-                      PermissionRequiredMixin, CreateView):
+                      PermissionRequiredMixin, MenuActiveMixin, CreateView):
     success_message = _("Successfully created")
 
 
 class StaffUpdateView(SuccessMessageMixin, LoginRequiredMixin, StaffRequiredMixin,
-                      PermissionRequiredMixin, UpdateView):
+                      PermissionRequiredMixin, MenuActiveMixin, UpdateView):
     success_message = _("Successfully updated")
 
 
@@ -77,7 +101,7 @@ class StaffDetailView(LoginRequiredMixin, StaffRequiredMixin,
 
 
 class StaffListView(LoginRequiredMixin, StaffRequiredMixin,
-                    PermissionRequiredMixin, ListView):
+                    PermissionRequiredMixin, MenuActiveMixin, ListView):
     search_fields = []
     paginate_by = 100
 
@@ -101,5 +125,5 @@ class StaffListView(LoginRequiredMixin, StaffRequiredMixin,
 
 
 class StaffDeleteView(DeleteSuccessMessageMixin, LoginRequiredMixin, StaffRequiredMixin,
-                      PermissionRequiredMixin, DeleteView):
+                      PermissionRequiredMixin, MenuActiveMixin, DeleteView):
     pass

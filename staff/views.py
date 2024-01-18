@@ -11,7 +11,7 @@ from staff.serializers import StaffSerializer
 class MedicalStaffListView(StaffListView):
     model = Staff
     template_name = 'staff/list.html'
-    permission_required = 'staff.list'
+    permission_required = 'staff.view_staff'
     search_fields = ['first_name', 'last_name', 'identification', 'email']
 
     def get_queryset(self):
@@ -26,7 +26,7 @@ class MedicalStaffListView(StaffListView):
 class MedicalStaffCreateView(StaffCreateView):
     model = Staff
     template_name = 'staff/form.html'
-    permission_required = 'staff.add'
+    permission_required = 'staff.add_staff'
     form_class = StaffForm
     success_url = reverse_lazy('staff:list')
 
@@ -34,7 +34,7 @@ class MedicalStaffCreateView(StaffCreateView):
 class MedicalStaffUpdateView(StaffUpdateView):
     model = Staff
     template_name = 'staff/form.html'
-    permission_required = 'staff.change'
+    permission_required = 'staff.change_staff'
     form_class = StaffForm
     success_url = reverse_lazy('staff:list')
 
@@ -42,7 +42,7 @@ class MedicalStaffUpdateView(StaffUpdateView):
 class MedicalStaffDetailView(StaffDetailView):
     model = Staff
     template_name = 'staff/detail.html'
-    permission_required = 'staff.view'
+    permission_required = 'staff.view_staff'
     serializer_class = StaffSerializer
     sections = {'personal information': ['first_name', 'last_name', 'identification', 'gender', 'address', 'city',
                                          'contact_number', 'date_of_birth', 'email'],
