@@ -56,3 +56,9 @@ class ProfileForm(ModelForm):
     class Meta:
         model = User
         fields = ("first_name", "last_name", "picture")
+
+
+class UserForm(ModelForm):
+    class Meta:
+        model = User
+        fields = ("is_patient", "is_staff", "is_active", "groups")

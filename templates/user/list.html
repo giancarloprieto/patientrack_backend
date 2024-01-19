@@ -1,0 +1,9 @@
+{% extends 'base_list.html' %}
+{% load static i18n %}
+{% block list_header %}{% trans 'User list' %}{% endblock %}
+{% block obj_content %}
+    <h5 class="card-title">{{ obj.username }}</h5>
+    <p class="card-text">Full name: {{ obj.first_name }} {{ obj.last_name }}</p>
+    <p class="card-text">Creation date: {{ obj.date_joined }}</p>
+    <a href="{% url 'authentication:user_update' obj.pk %}" class="btn btn-primary">Update</a>
+{% endblock %}

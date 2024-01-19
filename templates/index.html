@@ -112,14 +112,26 @@
 
 <!-- Side Menu -->
 <div class="side-menu">
-    <!-- Monitoring Submenu -->
-    {% if perms.patient.view_patient %}
-        <a href="{% url 'monitoring:list' %}" {% if tab.active == 'monitoring' %}class="active"{% endif %}>Monitoring</a>
+
+    {% if perms.monitoring.view_record or perms.monitoring.view_alarmsettings %}
+        <div class="submenu {% if tab.open == 'monitoring' %}open{% endif %}">
+            <a href="#" class="submenu-toggle">Monitoring</a>
+            <div class="submenu-content">
+                {% if perms.monitoring.view_record %}
+                    <a href="{% url 'monitoring:list' %}" {% if tab.active == 'monitoring' %}class="active"{% endif %}>Real
+                        time monitoring</a>
+                {% endif %}
+                {% if perms.monitoring.view_alarmsettings %}
+                    <a href="{% url 'monitoring:alarm_settings_list' %}"
+                       {% if tab.active == 'alarm_settings' %}class="active"{% endif %}>Alarm settings</a>
+                {% endif %}
+            </div>
+        </div>
     {% endif %}
 
     <!-- Administration Submenu -->
     {% if perms.patient.view_patient or perms.staff.view_staff or perms.device.view_device %}
-        <div class="submenu {% if tab.open == 'administration'%}open{% endif %}">
+        <div class="submenu {% if tab.open == 'administration' %}open{% endif %}">
             <a href="#" class="submenu-toggle">Administration</a>
             <div class="submenu-content">
                 {% if perms.patient.view_patient %}
@@ -128,28 +140,34 @@
                 {% if perms.staff.view_staff %}
                     <a href="{% url 'staff:list' %}" {% if tab.active == 'staff' %}class="active"{% endif %}>Staff</a>
                 {% endif %}
+                {% if perms.auth.view_user %}
+                    <a href="{% url 'authentication:user_list' %}" {% if tab.active == 'user' %}class="active"{% endif %}>Users</a>
+                {% endif %}
                 {% if perms.device.view_device %}
-                    <a href="{% url 'device:list' %}" {% if tab.active == 'device' %}class="active"{% endif %}>Devices</a>
+                    <a href="{% url 'device:list' %}"
+                       {% if tab.active == 'device' %}class="active"{% endif %}>Devices</a>
                 {% endif %}
             </div>
         </div>
     {% endif %}
 
-    {% if perms.report.view_report %}
+    {% if perms.report.view_recordreport %}
         <a href="{% url 'report:list' %}" {% if tab.active == 'report' %}class="active"{% endif %}>Reports</a>
     {% endif %}
     {% if perms.device.view_devicetype or perms.device.view_sensor or perms.device.view_variable %}
-        <div class="submenu {% if tab.open == 'reference'%}open{% endif %}">
+        <div class="submenu {% if tab.open == 'reference' %}open{% endif %}">
             <a href="#" class="submenu-toggle">References</a>
             <div class="submenu-content">
                 {% if perms.device.view_devicetype %}
-                    <a href="{% url 'device:type_list' %}" {% if tab.active == 'device_type' %}class="active"{% endif %}>Device Types</a>
+                    <a href="{% url 'device:type_list' %}"
+                       {% if tab.active == 'device_type' %}class="active"{% endif %}>Device Types</a>
                 {% endif %}
                 {% if perms.device.view_sensor %}
                     <a href="{% url 'device:sensor_list' %}" {% if tab.active == 'sensor' %}class="active"{% endif %}>Sensors</a>
                 {% endif %}
                 {% if perms.device.view_variable %}
-                    <a href="{% url 'device:variable_list' %}" {% if tab.active == 'variable' %}class="active"{% endif %}>Variables</a>
+                    <a href="{% url 'device:variable_list' %}"
+                       {% if tab.active == 'variable' %}class="active"{% endif %}>Variables</a>
                 {% endif %}
             </div>
         </div>

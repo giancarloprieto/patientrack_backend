@@ -1,26 +1,27 @@
 from django.urls import reverse_lazy
 
 from main.views import StaffListView, StaffCreateView, StaffUpdateView, StaffDetailView
+from monitoring.utils import get_patient_qs_filter
 from patient.forms import PatientForm
 from patient.models import Patient
 from patient.serializers import PatientSerializer
 
 
-# Create your views here.
+class PatientQuerysetMixin:
+    def get_queryset(self):
+        qs_filter = get_patient_qs_filter(self.request.user)
+        if qs_filter:
+            self.queryset = self.model.objects.filter(**qs_filter).prefetch_related('attending_staff')
+        else:
+            self.queryset = self.model.objects.prefetch_related('attending_staff')
+        return super().get_queryset()
 
-class PatientListView(StaffListView):
+
+class PatientListView(PatientQuerysetMixin, StaffListView):
     model = Patient
     template_name = 'patient/list.html'
     permission_required = 'patient.view_patient'
     search_fields = ['first_name', 'last_name', 'identification']
-
-    def get_queryset(self):
-        # if self.request.user.is_staff:
-        #     queryset = self.model.objects.filter(attending_staff__user=self.request.user)
-        # else:
-        #     queryset = self.model.objects.all()
-        self.queryset = self.model.objects.all().prefetch_related('attending_staff')
-        return super().get_queryset()
 
 
 class PatientCreateView(StaffCreateView):
@@ -31,7 +32,7 @@ class PatientCreateView(StaffCreateView):
     success_url = reverse_lazy('patient:list')
 
 
-class PatientUpdateView(StaffUpdateView):
+class PatientUpdateView(PatientQuerysetMixin, StaffUpdateView):
     model = Patient
     template_name = 'patient/form.html'
     permission_required = 'patient.change_patient'
@@ -39,7 +40,7 @@ class PatientUpdateView(StaffUpdateView):
     success_url = reverse_lazy('patient:list')
 
 
-class PatientDetailView(StaffDetailView):
+class PatientDetailView(PatientQuerysetMixin, StaffDetailView):
     model = Patient
     template_name = 'patient/detail.html'
     permission_required = 'patient.view_patient'

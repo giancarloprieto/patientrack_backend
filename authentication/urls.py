@@ -2,7 +2,7 @@ import django.contrib.auth.views as auth_views
 from django.urls import path, reverse_lazy
 from django.views.generic import TemplateView
 
-from authentication.views import RegisterView, EmailConfirmView, ProfileView
+from authentication.views import RegisterView, EmailConfirmView, ProfileView, UserListView, UserUpdateView
 
 authentication_patterns = (
     [
@@ -52,5 +52,7 @@ authentication_patterns = (
              name='register_email_confirm'),
         # path('register/email/resend/<pk>', ResendVerificationMailView.as_view(), name='register_email_resend'),
         path('profile', ProfileView.as_view(), name='profile'),
+        path('user', UserListView.as_view(), name='user_list'),
+        path('user/update/<pk>', UserUpdateView.as_view(), name='user_update'),
 
     ], 'authentication')

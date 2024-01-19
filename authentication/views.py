@@ -6,15 +6,15 @@ from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.utils.http import urlsafe_base64_decode
+from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import never_cache
 from django.views.decorators.debug import sensitive_post_parameters
 from django.views.generic import FormView, TemplateView
 
-from authentication.forms import RegisterForm, ProfileForm
+from authentication.forms import RegisterForm, ProfileForm, UserForm
 from authentication.models import User
 from authentication.utils import send_verification_mail
-from main.views import LoggedFormView
-from django.utils.translation import gettext_lazy as _
+from main.views import LoggedFormView, StaffListView, StaffUpdateView
 
 INTERNAL_RESET_URL_TOKEN = 'set-password'
 
@@ -110,3 +110,18 @@ class ProfileView(LoggedFormView):
     def form_valid(self, form):
         form.save()
         return super().form_valid(form)
+
+
+class UserListView(StaffListView):
+    model = User
+    template_name = 'user/list.html'
+    permission_required = 'auth.view_user'
+    search_fields = ['name']
+
+
+class UserUpdateView(StaffUpdateView):
+    model = User
+    template_name = 'user/form.html'
+    permission_required = 'auth.change_user'
+    form_class = UserForm
+    success_url = reverse_lazy('device:list')

@@ -1,0 +1,4 @@
+class Roles:
+    PATIENT = 'PATIENT'
+    MEDICAL_STAFF = 'MEDICAL_STAFF'
+    ADMIN = 'ADMIN'

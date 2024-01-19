@@ -1,11 +1,14 @@
 from django.db.models import Prefetch
+from django.urls import reverse_lazy
 from django.utils import timezone
 
 from device.models import Variable
 from followup.models import FollowUp
-from main.views import StaffListView, LoggedDetailView
-from monitoring.models import Record
-from monitoring.utils import get_records_data_for_chart
+from main.constants import Roles
+from main.views import StaffListView, LoggedDetailView, StaffCreateView, StaffUpdateView
+from monitoring.forms import AlarmSettingsForm
+from monitoring.models import Record, AlarmSettings
+from monitoring.utils import get_records_data_for_chart, get_patient_qs_filter
 from patient.models import Patient
 from patient.serializers import PatientSerializer
 from staff.models import Staff
@@ -15,7 +18,7 @@ from staff.models import Staff
 
 class MonitoringView(StaffListView):
     template_name = 'monitoring/list.html'
-    permission_required = 'patient.view_patient'
+    permission_required = 'monitoring.view_record'
     paginate_by = 100
     model = Patient
     search_fields = ['first_name', 'last_name', 'identification']
@@ -39,8 +42,12 @@ class MonitoringView(StaffListView):
                 )
             )
 
-        self.queryset = self.model.objects.prefetch_related(*prefetch_list).all()
-
+        qs_filter = get_patient_qs_filter(self.request.user)
+        print('qs_filter', qs_filter)
+        if qs_filter:
+            self.queryset = self.model.objects.filter(**qs_filter).prefetch_related(*prefetch_list).all()
+        else:
+            self.queryset = self.model.objects.prefetch_related(*prefetch_list).all()
         return super().get_queryset()
 
     def get_context_data(self, **kwargs):
@@ -52,7 +59,7 @@ class MonitoringView(StaffListView):
 class PatientMonitoringView(LoggedDetailView):
     model = Patient
     template_name = 'monitoring/detail.html'
-    permission_required = 'patient.view_patient'
+    permission_required = 'monitoring.view_record'
     serializer_class = PatientSerializer
     sections = {'patient information': ['first_name', 'last_name', 'identification', 'gender', 'address', 'city',
                                         'admission_date', 'discharge_date', 'status', 'facility', 'attending_staff',
@@ -105,3 +112,40 @@ class PatientMonitoringView(LoggedDetailView):
             exclude(alarm_name="").order_by('-datetime_device')
         context['follow_up'] = self.get_follow_up_data()
         return context
+
+    def get_queryset(self):
+        qs_filter = get_patient_qs_filter(self.request.user)
+        if qs_filter:
+            self.queryset = self.model.objects.filter(**qs_filter).all()
+        else:
+            self.queryset = self.model.objects.all()
+        return super().get_queryset()
+
+
+class AlarmSettingsListView(StaffListView):
+    model = AlarmSettings
+    template_name = 'monitoring/alarm_settings/list.html'
+    permission_required = 'monitoring.view_alarmsettings'
+    search_fields = ['name']
+    active_tab = 'alarm_settings'
+    open_menu = 'monitoring'
+
+
+class AlarmSettingsCreateView(StaffCreateView):
+    model = AlarmSettings
+    template_name = 'monitoring/alarm_settings/form.html'
+    permission_required = 'monitoring.add_alarmsettings'
+    form_class = AlarmSettingsForm
+    success_url = reverse_lazy('monitoring:alarm_settings_list')
+    active_tab = 'alarm_settings'
+    open_menu = 'monitoring'
+
+
+class AlarmSettingsUpdateView(StaffUpdateView):
+    model = AlarmSettings
+    template_name = 'monitoring/alarm_settings/form.html'
+    permission_required = 'monitoring.add_alarmsettings'
+    form_class = AlarmSettingsForm
+    success_url = reverse_lazy('monitoring:alarm_settings_list')
+    active_tab = 'alarm_settings'
+    open_menu = 'monitoring'

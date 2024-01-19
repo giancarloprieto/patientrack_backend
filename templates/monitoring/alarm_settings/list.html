@@ -1,0 +1,10 @@
+{% extends 'base_list.html' %}
+{% load static i18n %}
+{% block list_header %}{% trans 'Alarm settings list' %}{% endblock %}
+{% block obj_content %}
+    <h5 class="card-title">{{ obj.name }}</h5>
+    <p class="card-text">Variable: {{ obj.variable.name }}</p>
+    <p class="card-text">Operator: {{ obj.operator }}</p>
+    <p class="card-text">Reference Value: {{ obj.reference_value }}</p>
+    <a href="{% url 'monitoring:alarm_settings_update' obj.pk %}" class="btn btn-primary">Update</a>
+{% endblock %}

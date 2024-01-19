@@ -9,11 +9,12 @@ from patient.models import Patient
 
 class FollowUpListView(StaffListView):
     model = FollowUp
-    template_name = 'follow_up/list.html'
+    template_name = 'monitoring/follow_up/list.html'
     permission_required = 'followup.view_followup'
     search_fields = ['created_by', 'comment']
     ordering = '-created_at'
     active_tab = 'monitoring'
+    open_menu = 'monitoring'
 
     def get_queryset(self):
         # if self.request.user.is_staff:
@@ -26,10 +27,11 @@ class FollowUpListView(StaffListView):
 
 class FollowUpCreateView(StaffCreateView):
     model = FollowUp
-    template_name = 'follow_up/form.html'
+    template_name = 'monitoring/follow_up/form.html'
     permission_required = 'followup.add_followup'
     form_class = FollowUpForm
     active_tab = 'monitoring'
+    open_menu = 'monitoring'
 
     def form_valid(self, form):
         patient_id = self.kwargs['patient_id']
@@ -46,12 +48,13 @@ class FollowUpCreateView(StaffCreateView):
 
 class FollowUpUpdateView(StaffUpdateView):
     model = FollowUp
-    template_name = 'follow_up/form.html'
+    template_name = 'monitoring/follow_up/form.html'
     permission_required = 'followup.change_followup'
     form_class = FollowUpForm
     success_url = reverse_lazy('patient:list')
     active_tab = 'monitoring'
-    
+    open_menu = 'monitoring'
+
     def get_queryset(self):
         self.queryset = self.model.objects.filter(patient_id=self.kwargs['patient_id'],
                                                   created_by=self.request.user.email)

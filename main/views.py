@@ -35,23 +35,24 @@ class PermissionRequiredMixin(OriginalPermissionRequiredMixin):
 class MenuActiveMixin:
     active_tab = None
     open_menu = None
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         tab = {'active': self.active_tab, 'open': self.open_menu}
-        tabs_map = {'monitoring': ['monitoring'],
-                    'administration': ['patient', 'staff', 'device'],
+        tabs_map = {'monitoring': ['monitoring', 'alarm_settings'],
+                    'administration': ['patient', 'staff', 'device', 'user'],
                     'report': ['report'],
                     'reference': ['device_type', 'sensor', 'variable']}
         if not self.active_tab:
+            module = self.template_name.split('/'[0])
             for open, active_list in tabs_map.items():
                 for active in active_list:
-                    if active in self.template_name:
+                    if active in module:
                         tab = {'active': active, 'open': open}
                         break
                 else:
                     continue
                 break
-        print('tab', tab)
         context['tab'] = tab
         return context
 
