@@ -43,7 +43,6 @@ class MonitoringView(StaffListView):
             )
 
         qs_filter = get_patient_qs_filter(self.request.user)
-        print('qs_filter', qs_filter)
         if qs_filter:
             self.queryset = self.model.objects.filter(**qs_filter).prefetch_related(*prefetch_list).all()
         else:

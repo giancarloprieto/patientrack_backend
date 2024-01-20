@@ -1,0 +1,27 @@
+{% extends 'index.html' %}
+{% load static i18n %}
+{% block content %}
+    <div class="container mt-4">
+        <h2>{% block form_title %}{% endblock %}</h2>
+        <form method="post" action="" class="row g-3">
+            {% csrf_token %}
+            {% block form_extra_info %}{% endblock %}
+            {% for field in form %}
+                <div class="col-md-6">
+                    <div class="form-group">
+                        {% block form_field %}
+                            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                            {{ field }}
+                            <div class="invalid-feedback">
+                                {{ field.errors }}
+                            </div>
+                        {% endblock %}
+                    </div>
+                </div>
+            {% endfor %}
+            <div class="col-12">
+                <button class="btn btn-primary" type="submit">{% trans 'Submit' %}</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}

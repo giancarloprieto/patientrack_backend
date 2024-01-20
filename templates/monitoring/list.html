@@ -42,7 +42,7 @@
                                                 </div>
                                                 <div class="modal-body">
                                                     {% for record in patient.alarms %}
-                                                        {{ record.alarm_name }}
+                                                        {{ record.datetime_device|date:"Y-m-d H:i:s" }} - {{ record.alarm_name }}<br>
                                                     {% endfor %}
                                                 </div>
                                                 <div class="modal-footer">

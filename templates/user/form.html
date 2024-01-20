@@ -1,20 +1,29 @@
-{% extends 'index.html' %}
+{% extends 'base_form.html' %}
 {% load static i18n %}
-{% block content %}
-    <div class="container mt-4">
-        <h2>User</h2>
-        <form method="post" action="" >
-            {% csrf_token %}
-            {% for field in form %}
-                <div class="form-group">
-                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                    {{ field }}
-                    <div class="invalid-feedback">
-                        {{ field.errors }}
-                    </div>
-                </div>
-            {% endfor %}
-            <button class="btn btn-primary" type="submit">Submit</button>
-        </form>
+{% block form_extra_info %}
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" name="date_of_birth" value="{{ object.username }}" class="form-control"
+                   disabled id="username">
+        </div>
     </div>
-{%  endblock %}
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="full_name">{% trans 'Full name' %}</label>
+            <input type="text" name="full_name" value="{{ object.first_name }}  {{ object.last_name }}"
+                   class="form-control"
+                   disabled id="full_name">
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="email">{% trans 'Email' %}</label>
+            <input type="text" name="email" value="{{ object.email }}"
+                   class="form-control"
+                   disabled id="email">
+        </div>
+    </div>
+{% endblock %}
+{% block form_title %}{% trans 'User' %}{% endblock %}
+

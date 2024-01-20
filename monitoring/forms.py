@@ -1,9 +1,8 @@
-from django import forms
-
+from main.forms import BaseModelForm
 from monitoring.models import AlarmSettings
 
 
-class AlarmSettingsForm(forms.ModelForm):
+class AlarmSettingsForm(BaseModelForm):
     class Meta:
         model = AlarmSettings
         fields = ['variable', 'name', 'reference_value', 'operator']

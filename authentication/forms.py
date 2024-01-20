@@ -3,9 +3,10 @@ from django.forms import ModelForm, ClearableFileInput
 from django.utils.translation import gettext_lazy as _
 
 from authentication.models import User
+from main.forms import BaseModelForm
 
 
-class RegisterForm(ModelForm):
+class RegisterForm(BaseModelForm):
     password1 = forms.CharField(
         label=_('Password'),
         required=True
@@ -46,7 +47,7 @@ class RegisterForm(ModelForm):
         fields = ("email", "first_name", "last_name")
 
 
-class ProfileForm(ModelForm):
+class ProfileForm(BaseModelForm):
     picture = forms.ImageField(
         label=_('Picture'),
         required=False,
@@ -58,7 +59,7 @@ class ProfileForm(ModelForm):
         fields = ("first_name", "last_name", "picture")
 
 
-class UserForm(ModelForm):
+class UserForm(BaseModelForm):
     class Meta:
         model = User
         fields = ("is_patient", "is_staff", "is_active", "groups")
