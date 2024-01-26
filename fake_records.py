@@ -14,10 +14,10 @@ device = Device.objects.get(patient=patient)
 
 data = {
     'temperatura': [35, 37, 34.5, 35.8, 39.7, 34.6, 38.2, 36.5, 28.4, 33.6, 37.5],
-    'ritmo cardiaco': [120, 130, 140, 150, 95, 94, 93, 88, 106, 100, 131, 117, 128],
+    'Ritmo cardíaco': [120, 130, 140, 150, 95, 94, 93, 88, 106, 100, 131, 117, 128],
 }
 
-dt = datetime(2023, 12, 16, 13, 0, 0)
+dt = datetime(2024, 1, 18, 13, 0, 0)
 
 for var_name, values in data.items():
     variable = Variable.objects.get(name__icontains=var_name)

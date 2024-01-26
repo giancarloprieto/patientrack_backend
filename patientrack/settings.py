@@ -30,7 +30,7 @@ load_dotenv(dotenv_path)
 SECRET_KEY = '1ivvzx++&ea0p71l$l08&^e_0=c0%76!(_2f8cmzqmd+d&c%##'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['localhost', 'ewr2dm9n5i.execute-api.us-east-1.amazonaws.com']
 

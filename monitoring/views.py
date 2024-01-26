@@ -70,7 +70,7 @@ class PatientMonitoringView(LoggedDetailView):
         variables_data = {}
         for variable in variables:
             records = Record.objects.filter(variable=variable, patient=self.object,
-                                            datetime_device__gte=self.datetime_48_hours_ago)
+                                            datetime_device__gte=self.datetime_48_hours_ago).order_by('datetime_device')
             if records:
                 variables_data[variable.id] = {
                     'name': variable.name,
