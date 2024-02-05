@@ -10,7 +10,7 @@ class VariableListView(StaffListView):
     model = Variable
     template_name = 'variable/list.html'
     permission_required = 'device.view_variable'
-    search_fields = ['name']
+    search_fields = ['name', 'identifier']
 
 
 class VariableCreateView(StaffCreateView):

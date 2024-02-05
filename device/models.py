@@ -7,6 +7,7 @@ from main.models import AbstractAuditModel
 class Variable(AbstractAuditModel):
     name = models.CharField(_('name'), max_length=100)
     unit = models.CharField(_('unit'), max_length=100)
+    identifier = models.CharField(_('identifier'), unique=True, max_length=100)
 
     def __str__(self):
         return self.name
