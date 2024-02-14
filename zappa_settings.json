@@ -7,6 +7,17 @@
     "runtime": "python3.8",
     "s3_bucket": "patientrack-zappa",
     "slim_handler": true,
-    "timeout_seconds": 300
+    "timeout_seconds": 300,
+    "extra_permissions": [
+      {
+        "Effect": "Allow",
+        "Action": [
+          "s3:GetObject"
+        ],
+        "Resource": [
+          "arn:aws:s3:::patientrack-zappa/static/*"
+        ]
+      }
+    ]
   }
 }
