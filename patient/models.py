@@ -20,6 +20,7 @@ class Patient(AbstractAuditModel):
 
     first_name = models.CharField(_('first name'), max_length=100)
     last_name = models.CharField(_('last name'), max_length=100)
+    age = models.IntegerField(_('age'),  null=True)
     identification = models.CharField(_('identification'), max_length=100)
     admission_date = models.DateTimeField(_('admission date'))
     discharge_date = models.DateTimeField(_('discharge date'), null=True, blank=True)

@@ -7,7 +7,7 @@ from .models import Variable, Sensor, Device, DeviceType
 class VariableForm(BaseModelForm):
     class Meta:
         model = Variable
-        fields = ['unit', 'name', 'identifier']
+        fields = ['unit', 'name', 'identifier', 'icon', 'css_class_suffix', 'color']
 
 
 class SensorForm(BaseModelForm):

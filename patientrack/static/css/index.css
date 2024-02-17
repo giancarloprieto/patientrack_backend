@@ -1,0 +1,292 @@
+:root {
+    --color-primary: #35C6C6;
+    --color-secondary: #99FFEA;
+    --color-background: #FBFBFB;
+    --color-hover: #f4f8f6;
+    --color-hover-secondary: #409095;
+    --color-font: #04383b;
+    --color-font-secondary: #145254;
+    --color-font-tertiary: #86B0B5;
+    --color-ritmo: #FF0000;
+    --color-temperatura: #FF6801;
+    --color-oxigeno: #46C890;
+
+}
+
+html {
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+   background-color: var(--color-hover) !important;
+}
+
+.sidebar {
+    height: 100vh;
+    width: 248px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: var(--color-background);
+    box-shadow: #e0e5e5 1.95px 1.95px 2.6px;
+    padding-top: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Inter', sans-serif;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar ul ul {
+    padding-left: 20px; /* Agrega un relleno izquierdo para los submenús */
+}
+
+.sidebar a {
+    color: var(--color-font-tertiary);
+    transition: background-color 0.3s ease;
+    font-size: 16px;
+    padding: 8px 32px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+
+}
+
+
+.sidebar img {
+    width: 24px;
+    height: 24px;
+    margin-right: 24px; /* Espaciado entre la imagen y el texto */
+    vertical-align: middle; /* Alinea verticalmente con el texto */
+}
+
+.sidebar a:hover {
+    background-color: var(--color-hover);
+    color: var(--color-font-secondary);
+    border-radius: 16px;
+}
+
+.sidebar-logo img {
+    max-width: 100%;
+    height: 24px;
+    width: 181.82px;
+    margin-top: 8px;
+    margin-left: 24px;
+    margin-right: 24px;
+    display: block;
+    margin-bottom: 64px; /* Espaciado entre el logo y los enlaces */
+}
+
+.nav-link i {
+    margin-right: 8px;
+}
+.collapse a {
+    padding-left: 72px;
+    padding-top: 4px;
+  }
+  .collapse a:hover {
+    background-color: var(--color-background);
+  }
+
+.nav-link:focus, .nav-link:active,
+.nav-item > .nav-link:focus, .nav-item > .nav-link:active {
+    text-decoration: none;
+    color: var(--color-primary);
+    background-color: var(--color-hover);
+    border-radius: 10px;
+    transition: transform 0.3s; /* Agrega una transición para suavizar el efecto */
+    transform: scale(1.1); /* Ajusta la escala según tus preferencias */
+}
+
+.nav-link:focus img, .nav-link:active img,
+.nav-item > .nav-link:focus img, .nav-item > .nav-link:active img {
+    color: var(--color-font-secondary);
+    filter: brightness(1.2); /* Ajusta el brillo según tus preferencias */
+    transition: transform 0.3s; /* Agrega una transición para suavizar el efecto */
+    transform: scale(1.1); /* Ajusta la escala según */
+}
+
+.nav-item a.active {
+    background-color: var(--color-background); /* Fondo para la opción activa */
+    color: var(--color-font-secondary); /* Texto para la opción activa */
+}
+
+/* BARRA SUPERIOR */
+
+
+.upper-bar {
+    margin-left: 250px;
+    background-color: var(--color-background);
+    box-shadow: #e0e5e5 1.95px 1.95px 2.6px;
+    color: var(--color-font-tertiary);
+    padding: 24px;
+    height: 56px;
+}
+.btn .notifications-btn {
+    margin: 0;
+    padding: 0;
+}
+.upper-bar img {
+    width: 30px;
+    /* background-color: none; */
+}
+
+#notificationsBtn img {
+    transition: filter 0.3s ease;
+}
+
+#notificationsBtn:hover img {
+    filter: contrast(200%);
+}
+#notificationsBtn:focus {
+    outline: none !important;
+    box-shadow: none;
+}
+#dropdownMenuButtonTop:hover img {
+    filter: contrast(200%);
+}
+#dropdownMenuButtonTop:focus {
+    outline: none !important;
+    box-shadow: none;
+}
+.dropdown .btn {
+    color: var(--color-font-tertiary);
+}
+.dropdown .btn:hover{
+    color: #64d0d6;
+}
+.dropdown .btn::after {
+    display: none;
+}
+.dropdown .dropdown-item {
+    color: var(--color-font-tertiary);
+}
+.dropdown .dropdown-item:hover {
+    background-color: var(--color-hover);
+    color: var(--color-font-secondary);
+    border-radius: 8px;
+}
+.dropdown .dropdown-menu {
+    border-color: var(--color-font-tertiary);
+    border-radius: 16px;
+}
+
+
+/* CONTENIDO */
+
+.content {
+    margin-left: 248px;
+    margin-top: 48px;
+    overflow-y: visible;
+    padding-top: 40px;
+    font-family: inter;
+}
+
+
+
+@media (max-width: 767.98px) {
+
+    .content {
+        margin-top: 32px;
+        margin-left: 0;
+        background-color: var(--color-hover);
+    }
+
+    .navbar {
+        /* display: flex;
+        justify-content: space-evenly;
+        align-items: center;  */
+        background-color: var(--color-background);
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+    }
+
+    .navbar-toggler {
+        background-color: transparent;
+        border: none; /* Elimina el borde del botón */
+        outline: none; /* Elimina el contorno del botón al hacer clic */
+        padding: 0;
+        box-shadow: none;
+    }
+
+    .navbar-toggler img {
+        width: 24px; /* Ajusta el ancho del icono según tus preferencias */
+        height: auto; /* Mantiene la proporción del icono */
+
+    }
+
+    .navbar-profile-dropdown img {
+        width: 32px !important; /* Cambia el tamaño del icono según tus preferencias */
+        height: 28px !important;
+    }
+
+    .navbar a {
+        color: var(--color-font-tertiary);
+    }
+
+    .navbar-toggler-icon {
+        background-color: var(--color-font-secondary)
+    }
+
+    .navbar-profile-dropdown {
+        display: flex;
+        align-items: center;
+        /*margin-left: 0;  Mueve el contenedor al extremo derecho */
+        /*padding: 0 16px;  Agrega un espacio alrededor del botón */
+    }
+
+    .navbar-profile-dropdown button::after {
+        display: none;
+    }
+
+    .navbar-profile-dropdown button {
+        /* margin-right: 16px;  Espaciado entre el botón y el menú desplegable */
+        /*padding: 0; /* Elimina el relleno del botón para que solo muestre el icono */
+        border: none; /* Elimina el borde del botón */
+        background: none; /* Elimina el fondo del botón */
+    }
+
+    .navbar-profile-dropdown .dropdown-menu {
+        min-width: auto;
+        margin-top: 8px;
+        transform: translateX(120%);
+    }
+
+
+    .navbar-profile-dropdown img {
+        width: 30px; /* Ajusta el tamaño del icono según tus preferencias */
+        height: 30px;
+
+    }
+
+    .navbar-collapse {
+        padding: 24px;
+
+    }
+
+    .navbar-brand img {
+        max-width: 100%;
+        width: 182px;
+        height: 24px;
+        margin-top: -6px;
+    }
+
+    .nav-item img {
+        width: 20px;
+        height: 20px;
+        margin-right: 8px;
+    }
+
+    .nav-item ul {
+        list-style: none;
+    }
+
+}
+

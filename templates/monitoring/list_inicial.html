@@ -1,0 +1,70 @@
+{% extends 'index.html' %}
+{% load static i18n monitoring_tags %}
+{% block content %}
+
+    <!-- Page Content -->
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                {% for patient in page_obj %}
+                    <div class="col-md-4 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ patient.first_name }} {{ patient.last_name }}</h5>
+                                <p class="card-text">Identification: {{ patient.identification }}</p>
+                                {% for variable in variables %}
+                                    {% with record=patient|get_variable_record:variable.id %}
+                                        {% if record %}
+                                            <p class="card-text">{{ variable.name }}: {{ record.value }} {{ variable.unit }}
+                                                at {{ record.datetime_device }}</p>
+                                        {% endif %}
+                                    {% endwith %}
+                                {% endfor %}
+                                <a type="button" class="btn btn-primary"
+                                        href="{% url 'monitoring:detail'  patient.id %}">
+                                    Details
+                                </a>
+                                {% if patient.alarms %}
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                            data-bs-target="#alarmsModal{{ patient.id }}">
+                                        Alarms
+                                    </button>
+
+                                    <div class="modal fade" id="alarmsModal{{ patient.id }}" tabindex="-1"
+                                         aria-labelledby="alarmsModalLabel{{ patient.id }}" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="alarmsModalLabel{{ patient.id }}">Alarms
+                                                        for {{ patient.first_name }} {{ patient.last_name }}</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    {% for record in patient.alarms %}
+                                                        {{ record.datetime_device|date:"Y-m-d H:i:s" }} - {{ record.alarm_name }}<br>
+                                                    {% endfor %}
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal">
+                                                        Close
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+
+
+                <!-- Add more cards for additional patients as needed -->
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,10 +1,9 @@
-from django.db.models import Prefetch
+from django.db.models import Prefetch, F
 from django.urls import reverse_lazy
 from django.utils import timezone
 
 from device.models import Variable
 from followup.models import FollowUp
-from main.constants import Roles
 from main.views import StaffListView, LoggedDetailView, StaffCreateView, StaffUpdateView
 from monitoring.forms import AlarmSettingsForm
 from monitoring.models import Record, AlarmSettings
@@ -27,7 +26,8 @@ class MonitoringView(StaffListView):
         datetime_48_hours_ago = timezone.now() - timezone.timedelta(days=365)
         prefetch_list = [Prefetch(
             'patient_record_set',
-            queryset=Record.objects.filter(datetime_device__gte=datetime_48_hours_ago).exclude(alarm_name="").order_by(
+            queryset=Record.objects.filter(datetime_device__gte=datetime_48_hours_ago).exclude(alarm_name="").
+            annotate(css_class_suffix=F('variable__css_class_suffix')).order_by(
                 '-datetime_device'),
             to_attr='alarms'
         )]
@@ -57,12 +57,12 @@ class MonitoringView(StaffListView):
 
 class PatientMonitoringView(LoggedDetailView):
     model = Patient
-    template_name = 'monitoring/detail.html'
+    template_name = 'monitoring/detail_final.html'
     permission_required = 'monitoring.view_record'
     serializer_class = PatientSerializer
-    sections = {'patient information': ['first_name', 'last_name', 'identification', 'gender', 'address', 'city',
-                                        'admission_date', 'discharge_date', 'status', 'facility', 'attending_staff',
-                                        'alarm_settings']}
+    sections = {'first': ['first_name', 'last_name', 'identification', 'gender'],
+                'second': ['address', 'city', 'age', 'staff_a_cargo'],
+                'third': ['admission_date', 'status', 'contact_number']}
     datetime_48_hours_ago = timezone.now() - timezone.timedelta(days=365)
 
     def get_variables_data(self):
@@ -75,6 +75,7 @@ class PatientMonitoringView(LoggedDetailView):
                 variables_data[variable.id] = {
                     'name': variable.name,
                     'unit': variable.unit,
+                    'color': variable.color,
                     'data': get_records_data_for_chart(records)
                 }
         return variables_data
@@ -108,7 +109,7 @@ class PatientMonitoringView(LoggedDetailView):
         context['variables_data'] = self.get_variables_data()
         context['alarms'] = Record.objects.filter(patient=self.object,
                                                   datetime_device__gte=self.datetime_48_hours_ago). \
-            exclude(alarm_name="").order_by('-datetime_device')
+            exclude(alarm_name="").select_related('variable').order_by('-datetime_device')
         context['follow_up'] = self.get_follow_up_data()
         return context
 

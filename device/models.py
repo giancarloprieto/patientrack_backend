@@ -8,6 +8,9 @@ class Variable(AbstractAuditModel):
     name = models.CharField(_('name'), max_length=100)
     unit = models.CharField(_('unit'), max_length=100)
     identifier = models.CharField(_('identifier'), unique=True, max_length=100)
+    icon = models.CharField(_('icon'), max_length=100)
+    css_class_suffix = models.CharField(_('css class suffix'), max_length=100)
+    color = models.CharField(_('color'), max_length=100)
 
     def __str__(self):
         return self.name

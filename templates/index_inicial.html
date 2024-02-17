@@ -1,0 +1,220 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Patient track</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- Your custom styles go here -->
+    {% block head_js %}{% endblock %}
+
+    {%  load my_pwa %}
+    {%  my_progressive_web_app_meta %}
+    <style>
+        body {
+            padding-top: 56px;
+        }
+
+        @media (min-width: 768px) {
+            body {
+                padding-top: 60px;
+            }
+        }
+
+        /* Define your custom styles for the side menu */
+        .side-menu {
+            background-color: #007bff;
+            color: #fff;
+            height: 100%;
+            position: fixed;
+            left: 0;
+            width: 250px;
+            padding-top: 56px; /* Adjusted for top bar height */
+        }
+
+        .submenu {
+            margin-bottom: 10px;
+        }
+
+        .submenu-toggle {
+            padding: 15px;
+            text-decoration: none;
+            color: #fff;
+            display: block;
+            cursor: pointer;
+        }
+
+        .submenu-content {
+            display: none;
+            padding-left: 20px;
+        }
+
+        .side-menu a {
+            padding: 10px;
+            text-decoration: none;
+            color: #fff;
+            display: block;
+            transition: background-color 0.3s;
+        }
+
+        .side-menu a:hover {
+            background-color: #0056b3;
+        }
+
+        .side-menu a.active {
+            background-color: #0056b3;
+            font-weight: bold;
+            border-right: 3px solid #fff;
+        }
+
+        /* Adjust the left margin to accommodate the side menu */
+        .content {
+            margin-left: 250px; /* Equal to the width of the side menu */
+            padding: 15px;
+        }
+
+        /* Add more styling as needed */
+    </style>
+</head>
+
+<body>
+
+<!-- Top Bar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">PatienTrack</a>
+
+        <!-- Buttons on the right -->
+        <div class="navbar-collapse justify-content-end">
+            <ul class="navbar-nav">
+                <!-- Dropdown with profile, logout, and change password -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        Cuenta
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="{% url 'authentication:logout' %}">Logout</a></li>
+                        <li><a class="dropdown-item" href="{% url 'authentication:profile' %}">Profile</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="{% url 'authentication:password_change' %}">Change
+                            Password</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Side Menu -->
+<div class="side-menu">
+
+    {% if perms.monitoring.view_record or perms.monitoring.view_alarmsettings %}
+        <div class="submenu {% if tab.open == 'monitoring' %}open{% endif %}">
+            <a href="#" class="submenu-toggle">Monitoring</a>
+            <div class="submenu-content">
+                {% if perms.monitoring.view_record %}
+                    <img src="{% static 'images/monitoreo-02-02.png' %}" alt="Your Image"> <a href="{% url 'monitoring:list' %}" {% if tab.active == 'monitoring' %}class="active"{% endif %}>Real
+                        time monitoring</a>
+                {% endif %}
+                {% if perms.monitoring.view_alarmsettings %}
+                    <a href="{% url 'monitoring:alarm_settings_list' %}"
+                       {% if tab.active == 'alarm_settings' %}class="active"{% endif %}>Alarm settings</a>
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+
+    <!-- Administration Submenu -->
+    {% if perms.patient.view_patient or perms.staff.view_staff or perms.device.view_device or perms.auth.view_user %}
+        <div class="submenu {% if tab.open == 'administration' %}open{% endif %}">
+            <a href="#" class="submenu-toggle">Administration</a>
+            <div class="submenu-content">
+                {% if perms.patient.view_patient %}
+                    <a href="{% url 'patient:list' %}" {% if tab.active == 'patient' %}class="active"{% endif %}>Patients</a>
+                {% endif %}
+                {% if perms.staff.view_staff %}
+                    <a href="{% url 'staff:list' %}" {% if tab.active == 'staff' %}class="active"{% endif %}>Staff</a>
+                {% endif %}
+                {% if perms.auth.view_user %}
+                    <a href="{% url 'authentication:user_list' %}" {% if tab.active == 'user' %}class="active"{% endif %}>Users</a>
+                {% endif %}
+                {% if perms.device.view_device %}
+                    <a href="{% url 'device:list' %}"
+                       {% if tab.active == 'device' %}class="active"{% endif %}>Devices</a>
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+
+    {% if perms.report.view_recordreport %}
+        <a href="{% url 'report:list' %}" {% if tab.active == 'report' %}class="active"{% endif %}>Reports</a>
+    {% endif %}
+    {% if perms.device.view_devicetype or perms.device.view_sensor or perms.device.view_variable %}
+        <div class="submenu {% if tab.open == 'reference' %}open{% endif %}">
+            <a href="#" class="submenu-toggle">References</a>
+            <div class="submenu-content">
+                {% if perms.device.view_devicetype %}
+                    <a href="{% url 'device:type_list' %}"
+                       {% if tab.active == 'device_type' %}class="active"{% endif %}>Device Types</a>
+                {% endif %}
+                {% if perms.device.view_sensor %}
+                    <a href="{% url 'device:sensor_list' %}" {% if tab.active == 'sensor' %}class="active"{% endif %}>Sensors</a>
+                {% endif %}
+                {% if perms.device.view_variable %}
+                    <a href="{% url 'device:variable_list' %}"
+                       {% if tab.active == 'variable' %}class="active"{% endif %}>Variables</a>
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+
+
+    <!-- Add more submenus or menu items as needed -->
+</div>
+
+<!-- Page Content -->
+<div class="content">
+    <div class="container-fluid">
+        {% block content %}{% endblock %}
+    </div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Obtén todos los elementos con la clase 'submenu-toggle'
+        var submenuToggles = document.querySelectorAll('.submenu-toggle');
+
+        // Agrega un evento clic a cada elemento 'submenu-toggle'
+        submenuToggles.forEach(function (toggle) {
+            toggle.addEventListener('click', function () {
+                // Encuentra el elemento hermano siguiente que tiene la clase 'submenu-content'
+                var submenuContent = toggle.nextElementSibling;
+
+                // Cambia la visibilidad del submenu
+                submenuContent.style.display = (submenuContent.style.display === 'block') ? 'none' : 'block';
+            });
+            if (toggle.parentNode.classList.contains('open')) {
+                var submenuContent = toggle.nextElementSibling;
+                submenuContent.style.display = 'block';
+            }
+        });
+    });
+</script>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+{% block module_js %} {% endblock %}
+
+</body>
+
+</html>

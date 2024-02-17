@@ -1,0 +1,110 @@
+
+/* CONTENIDO */
+
+/* Estilos para la card */
+.card {
+    border-radius: 16px !important;
+    overflow: hidden; /* Esto asegura que el border-radius se aplique correctamente */
+    box-shadow: #e0e5e5 0px 2px 8px 0px !important;
+    border: none !important;
+
+}
+
+.card .card-body {
+    background-color: var(--color-background);
+    padding: 16px 24px;
+}
+
+.card-title img {
+    width: 40px;
+    height: 36px;
+}
+.card-title img:hover {
+    filter: contrast(130%);
+}
+.card-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 10px;
+    background-color: transparent;
+    border: none;
+    padding: 0;
+}
+.card-body .card-title {
+    color: var(--color-font);
+    margin-bottom: 4px;
+}
+.card-body .card-subtitle {
+    margin-bottom: 24px;
+    color: var(--color-font);
+}
+
+.card-text {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .icon-container {
+    margin-right: 10px;
+  }
+  .icon-container img {
+    width: 48px;
+    height: 48px;
+  }
+
+  .text-container {
+    flex-grow: 1;
+
+  }
+
+  .text-container h6  {
+    margin-bottom: 0px;
+    margin-bottom: 0;
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--color-font-secondary);
+  }
+  .text-container p {
+    margin-bottom: 0px;
+    margin-bottom: 0;
+    color: var(--color-font-secondary);
+
+  }
+  .text-container .timestamp {
+    font-size: 15px;
+    color: var(--color-font-secondary);
+  }
+
+  .btn-custom.btn-ver-detalles {
+    background-color:var(--color-primary);
+    color: var(--color-background);
+    padding: 8px 40px;
+    border-radius: 8px;
+}
+ .btn-custom.btn-ver-detalles:hover {
+    background-color: var(--color-hover-secondary);
+    color: var(--color-background);
+ }
+ .btn-custom.btn-ver-detalles:focus {
+    outline: none !important;
+    box-shadow: none;
+}
+
+.text-temp {
+    color: var(--color-temperatura) !important;
+}
+
+.text-ritmo {
+    color: var(--color-ritmo) !important;
+}
+
+.text-oxigeno {
+    color: var(--color-oxigeno) !important;
+}
