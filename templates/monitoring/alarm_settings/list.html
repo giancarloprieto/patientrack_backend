@@ -1,10 +1,29 @@
 {% extends 'base_list.html' %}
 {% load static i18n %}
-{% block list_header %}{% trans 'Alarm settings list' %}{% endblock %}
+{% block list_header %}Lista de configuraciones de alarmas{% endblock %}
 {% block obj_content %}
-    <h5 class="card-title">{{ obj.name }}</h5>
-    <p class="card-text">Variable: {{ obj.variable.name }}</p>
-    <p class="card-text">Operator: {{ obj.operator }}</p>
-    <p class="card-text">Reference Value: {{ obj.reference_value }}</p>
-    <a href="{% url 'monitoring:alarm_settings_update' obj.pk %}" class="btn btn-primary">Update</a>
+    <div class="mx-2">
+        <h6 class="card-title text-center">{{ obj.name }}</h6>
+    </div>
+
+    <div class="mx-2">
+        <h6 class="font-weight-bold custom-item-title text-center">Variable</h6>
+        <p class="custom-item-text text-center">{{ obj.variable.name }}</p>
+    </div>
+    <div class="mx-2">
+        <h6 class="font-weight-bold custom-item-title text-center">Operador</h6>
+        <p class="custom-item-text text-center">  {{ obj.operator }} </p>
+    </div>
+    <div class="mx-2">
+        <h6 class="font-weight-bold custom-item-title text-center">Valor de referencia</h6>
+        <p class="custom-item-text text-center">  {{ obj.reference_value }} </p>
+    </div>
+    <div>
+        <a class="btn custom-btn p-0" href="{% url 'monitoring:alarm_settings_update' obj.pk %}">
+            <img src="{% static 'images/monitoring/editar-21.png' %}" alt="Botón Imagen"
+                 class="custom-btn-img">
+        </a>
+    </div>
+
 {% endblock %}
+{% block create_url %}{% url 'monitoring:alarm_settings_create' %}{% endblock %}

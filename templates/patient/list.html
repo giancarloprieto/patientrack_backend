@@ -1,12 +1,32 @@
 {% extends 'base_list.html' %}
 {% load static i18n %}
-{% block list_header %}{% trans 'Patients list' %}{% endblock %}
+{% block list_header %}Lista de pacientes{% endblock %}
 {% block obj_content %}
-    <h5 class="card-title"><a href="{% url 'patient:detail' obj.pk %}">{{ obj.first_name }} {{ obj.last_name }}</a></h5>
-    <p class="card-text">Status: {{ obj.get_status_display }}</p>
-    <p class="card-text">Admission Date: {{ obj.admission_date }}</p>
-    <p class="card-text">Attending Staff:
-        {% for staff in obj.attending_staff.all %}{{ staff.first_name }} {{ staff.last_name }}
-            , {% endfor %}</p>
-    <a href="{% url 'patient:update' obj.pk %}" class="btn btn-primary">Update</a>
+    <div class="mx-2">
+        <h6 class="card-title text-center"><a
+                href="{% url 'patient:detail' obj.pk %}">{{ obj.first_name }} {{ obj.last_name }}</a></h6>
+    </div>
+
+    <div class="mx-2">
+        <h6 class="font-weight-bold custom-item-title text-center">Estado</h6>
+        <p class="custom-item-text text-center">{{ obj.get_status_display }}</p>
+    </div>
+    <div class="mx-2">
+        <h6 class="font-weight-bold custom-item-title text-center">Fecha de admisión</h6>
+        <p class="custom-item-text text-center">{{ obj.admission_date|date:"Y-m-d" }}</p>
+    </div>
+    <div>
+        <h6 class="font-weight-bold custom-item-title text-center">Personal a cargo:</h6>
+        <p class="custom-item-text text-center">
+            {% for staff in obj.attending_staff.all %}{{ staff.first_name }} {{ staff.last_name }} , {% endfor %}
+        </p>
+    </div>
+    <div>
+        <a class="btn custom-btn p-0" href="{% url 'patient:update' obj.pk %}">
+            <img src="{% static 'images/monitoring/editar-21.png' %}" alt="Botón Imagen"
+                 class="custom-btn-img">
+        </a>
+    </div>
+
 {% endblock %}
+{% block create_url %}{% url 'patient:create' %}{% endblock %}

@@ -1,8 +1,25 @@
 {% extends 'base_list.html' %}
 {% load static i18n %}
-{% block list_header %}{% trans 'Variables list' %}{% endblock %}
+{% block list_header %}Lista de variables{% endblock %}
 {% block obj_content %}
-    <h5 class="card-title">{{ obj.name }}</h5>
-    <p class="card-text">Unit: {{ obj.unit }}</p>
-    <a href="{% url 'device:variable_update' obj.pk %}" class="btn btn-primary">Update</a>
+    <div class="mx-2">
+        <h6 class="card-title text-center">{{ obj.name }}</h6>
+    </div>
+
+    <div class="mx-2">
+        <h6 class="font-weight-bold custom-item-title text-center">Unidades</h6>
+        <p class="custom-item-text text-center">{{ obj.unit }}</p>
+    </div>
+        <div class="mx-2">
+        <h6 class="font-weight-bold custom-item-title text-center">Identificador</h6>
+        <p class="custom-item-text text-center">{{ obj.identifier }}</p>
+    </div>
+    <div>
+        <a class="btn custom-btn p-0" href="{% url 'device:variable_update' obj.pk %}">
+            <img src="{% static 'images/monitoring/editar-21.png' %}" alt="Botón Imagen"
+                 class="custom-btn-img">
+        </a>
+    </div>
+
 {% endblock %}
+{% block create_url %}{% url 'device:variable_create' %}{% endblock %}

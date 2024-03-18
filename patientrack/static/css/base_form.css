@@ -1,0 +1,132 @@
+.titulo {
+    color: var(--color-primary);
+
+}
+
+/* Estilos para los inputs de texto */
+.form-group input[type="text"], .form-group input[type="email"] ,
+.form-group input[type="date"], .form-group input[type="number"]{
+    box-sizing: border-box;
+    height: 48px;
+    background-color: var(--color-background);
+    padding:4px 24px;
+    border: none;
+    border-radius: 8px;
+    box-shadow: #e0e5e5 0px 2px 8px 0px ;
+    width: 100%;
+}
+
+/* Estilos para los inputs de fecha */
+.form-group input[type="date"] {
+    box-sizing: border-box;
+    height: 48px;
+    background-color: var(--color-background);
+    padding:4px 24px;
+    border: none;
+    border-radius: 8px;
+    box-shadow: #e0e5e5 0px 2px 8px 0px ;
+    width: 100%;
+
+}
+
+/* Estilos para los selects */
+.form-group .form-select {
+    box-sizing: border-box;
+    height: 48px;
+    background-color: var(--color-background);
+    padding:4px 24px;
+    border: none;
+    border-radius: 8px;
+    box-shadow: #e0e5e5 0px 2px 8px 0px ;
+    width: 100%;
+    background-image: url('ruta/a/la/flecha.png');
+    background-position: right 0.75rem center;
+    background-repeat: no-repeat;
+    background-size: 16px 16px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+/* Estilos adicionales para cuando el input o select tiene foco */
+.form-group input[type="text"]:focus,
+.form-group input[type="date"]:focus,
+.form-group .form-select:focus {
+    border-color:  #e0e5e5 0px 2px 8px 0px;
+    outline: 0;
+    box-shadow:0 0 0 0.2rem #e2f4ee !important;
+}
+
+button[type="submit"] {
+    padding:8px 32px;
+    border: none;
+    border-radius: 8px;
+    background-color: var(--color-primary) !important;
+    color: var(--color-background);
+    cursor: pointer;
+}
+
+/* Estilos adicionales para cuando el botón tiene foco */
+button[type="submit"]:focus {
+    outline: 0;
+    box-shadow:0 0 0 0.2rem #e2f4ee !important;
+}
+
+button[type="submit"]:hover {
+    background-color: var(--color-background-secondary) !important;
+    color: var(--color-background);
+
+}
+/* Estilos para los checkboxes */
+.form-check {
+    margin-bottom: 0.5rem; /* Espacio entre los checkboxes */
+  }
+
+  .form-check-input {
+    width: 20px; /* Ancho del checkbox */
+    height: 20px; /* Altura del checkbox */
+    margin-right: 0.5rem; /* Espacio entre el checkbox y la etiqueta */
+  }
+
+  .form-check-label {
+    font-size: 16px; /* Tamaño de fuente de la etiqueta del checkbox */
+  }
+
+  /* Estilos para el checkbox cuando está marcado */
+  .form-check-input:checked {
+    background-color: var(--color-primary) !important;
+    border: none;
+  }
+
+
+  .form-check-input:hover {
+    opacity: 0.8;
+  }
+
+  .form-check-input:focus {
+    outline: none;
+    box-shadow:0 0 0 0.2rem #e2f4ee !important;
+  }
+
+
+/* Estilos para el select personalizado */
+#miSelect.custom-select {
+    width: 100%;
+    padding: 0.5rem 1rem;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid var(--color-font-tertiary);
+    background-color:var(--color-background);
+    color: var(--color-font-secondary);
+    cursor: pointer;
+  }
+
+  #miSelect.custom-select:hover {
+    border-color: var(--color-font-tertiary);
+  }
+
+
+  #miSelect.custom-select:focus {
+    outline: none;
+    box-shadow: 0 0 0 0.2rem #e2f4ee !important;
+  }

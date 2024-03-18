@@ -1,9 +1,25 @@
 {% extends 'base_list.html' %}
 {% load static i18n %}
-{% block list_header %}{% trans 'User list' %}{% endblock %}
+{% block list_header %}Lista de usuarios{% endblock %}
 {% block obj_content %}
-    <h5 class="card-title">{{ obj.username }}</h5>
-    <p class="card-text">Full name: {{ obj.first_name }} {{ obj.last_name }}</p>
-    <p class="card-text">Creation date: {{ obj.date_joined }}</p>
-    <a href="{% url 'authentication:user_update' obj.pk %}" class="btn btn-primary">Update</a>
+    <div class="mx-2">
+        <h6 class="card-title text-center">{{ obj.username }}</h6>
+    </div>
+
+    <div class="mx-2">
+        <h6 class="font-weight-bold custom-item-title text-center">Nombre completo</h6>
+        <p class="custom-item-text text-center">{{ obj.first_name }} {{ obj.last_name }}</p>
+    </div>
+    <div class="mx-2">
+        <h6 class="font-weight-bold custom-item-title text-center">Fecha de creación</h6>
+        <p class="custom-item-text text-center">{{ obj.date_joined|date:"Y-m-d" }}</p>
+    </div>
+    <div>
+        <a class="btn custom-btn p-0" href="{% url 'authentication:user_update' obj.pk %}">
+            <img src="{% static 'images/monitoring/editar-21.png' %}" alt="Botón Imagen"
+                 class="custom-btn-img">
+        </a>
+    </div>
+
 {% endblock %}
+{% block create_url %}#{% endblock %}

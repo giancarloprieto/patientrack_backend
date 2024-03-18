@@ -46,7 +46,7 @@ class PatientDetailView(PatientQuerysetMixin, StaffDetailView):
     permission_required = 'patient.view_patient'
     serializer_class = PatientSerializer
     sections = {
-        'personal information': ['first_name', 'last_name', 'age', 'identification', 'gender', 'address', 'city'],
-        'contact information': ['contact_number', 'emergency_contact_name', 'emergency_contact_number'],
-        'medical information': ['admission_date', 'discharge_date', 'status', 'facility', 'attending_staff',
+        'Información personal': ['first_name', 'last_name', 'age', 'identification', 'gender', 'address', 'city'],
+        'Información de contacto': ['contact_number', 'emergency_contact_name', 'emergency_contact_number'],
+        'Información médica': ['admission_date', 'discharge_date', 'status', 'facility', 'attending_staff',
                                 'alarm_settings']}

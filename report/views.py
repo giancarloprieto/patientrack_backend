@@ -40,6 +40,11 @@ class RecordReportListView(PatientQuerysetMixin, StaffListView):
     permission_required = 'report.view_recordreport'
     search_fields = ['created_by', 'patient__first_name', 'patient__last_name']
 
+    def get_queryset(self):
+        self.queryset = super().get_queryset()
+        self.queryset = self.queryset.order_by('-created_at')
+        return self.queryset
+
 
 class RecordReportDetailView(PatientQuerysetMixin, StaffDetailView):
     model = RecordReport

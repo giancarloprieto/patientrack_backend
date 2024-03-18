@@ -20,7 +20,7 @@ class FormFieldRenderMixin(object):
         if isinstance(visible.field, (ModelChoiceField, TypedChoiceField, ChoiceField,)):
             visible.field.widget.attrs.update({'class': 'form-select'})
         elif isinstance(visible.field, (ModelMultipleChoiceField, MultipleChoiceField,)):
-            visible.field.widget.attrs.update({'class': 'form-select'})
+            visible.field.widget.attrs.update({'class': 'form-select miSelect'})
         elif isinstance(visible.field, (DateField,)):
             visible.field.widget.attrs = {'type': 'date', 'class': 'date-picker form-control', 'autocomplete': 'off'}
         elif isinstance(visible.field, (DateTimeField,)):

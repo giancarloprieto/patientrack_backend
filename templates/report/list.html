@@ -1,11 +1,39 @@
 {% extends 'base_list.html' %}
 {% load static i18n %}
-{% block list_header %}{% trans 'Reports list' %}{% endblock %}
+{% block list_header %}Lista de reportes generados{% endblock %}
 {% block obj_content %}
-    <h5 class="card-title"><a href="{% url 'report:detail' obj.pk %}">{{ obj.patient.first_name }} {{ obj.patient.last_name }}</a></h5>
-    <p class="card-text">Status: {{ obj.get_status_display }}</p>
-    <p class="card-text">Created by: {{ obj.created_by }}</p>
-    <p class="card-text">Variables:
-        {% for variable in obj.variables.all %}{{ variable.name }}
-            , {% endfor %}</p>
+    <div class="mx-2">
+        <h6 class="card-title text-center"><a
+                href="{% url 'report:detail' obj.pk %}">Ver detalles</a></h6>
+    </div>
+
+    <div class="mx-2">
+        <h6 class="font-weight-bold custom-item-title text-center">Paciente</h6>
+        <p class="custom-item-text text-center">{{ obj.patient.first_name }} {{ obj.patient.last_name }}</p>
+    </div>
+    <div class="mx-2">
+        <h6 class="font-weight-bold custom-item-title text-center">Estado</h6>
+        <p class="custom-item-text text-center">{{ obj.get_status_display }}</p>
+    </div>
+    <div>
+        <h6 class="font-weight-bold custom-item-title text-center">Creado por:</h6>
+        <p class="custom-item-text text-center">{{ obj.created_by }}</p>
+    </div>
+        <div class="mx-2">
+        <h6 class="font-weight-bold custom-item-title text-center">Fecha</h6>
+        <p class="custom-item-text text-center">{{ obj.created_at|date:"Y-m-d" }}</p>
+    </div>
+    <div>
+        <h6 class="font-weight-bold custom-item-title text-center">Archivo:</h6>
+        <p class="custom-item-text text-center">
+            {% if obj.file %}
+                <a href="{{ obj.file.url }}" target="_blank">Descargar</a>
+            {% else %}
+                ----
+            {% endif %}
+        </p>
+    </div>
+
+
 {% endblock %}
+{% block create_url %}{% url 'report:create' %}{% endblock %}

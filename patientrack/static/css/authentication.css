@@ -1,0 +1,136 @@
+:root {
+    --color-primary: #35C6C6;
+    --color-secondary: #99FFEA;
+    --color-background: #FBFBFB;
+    --color-background-secondary: #1f8c8c;
+    --color-hover: #f4f8f6;
+    --color-hover-secondary: #409095;
+    --color-font: #04383b;
+    --color-font-secondary: #145254;
+    --color-font-tertiary: #86B0B5;
+    --color-ritmo: #FF0000;
+    --color-temperatura: #FF6801;
+    --color-oxigeno: #46C890;
+
+}
+html {
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif !important;
+}
+
+.bg-gradient-container {
+    background: rgb(122,249,224);
+    background: linear-gradient(180deg, rgba(122,249,224,1) 25%, rgba(53,198,198,1) 58%, rgba(22,164,164,1) 92%);
+    height: 100%;
+    opacity: .9;
+}
+.custom-logo {
+    max-width: 120px;
+
+}
+
+.custom-title {
+    font-size: 40px;
+    font-weight: 500;
+}
+
+
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: var(--color-hover);
+    padding: 20px; /* Añadimos un padding para separar el contenido de los bordes */
+}
+
+.login-form {
+    background-color: transparent;
+    padding: 20px;
+    border-radius: 0;
+    box-shadow: none;
+    width: 100%; /* Hacemos que el formulario ocupe todo el ancho */
+    max-width: 400px;
+}
+.login-form button[type="submit"] {
+    background-color: var(--color-primary);
+    color: var(--color-background);
+    box-shadow: #e0e5e5 0px 2px 8px 0px ;
+    padding: 8px 24px;
+    border-radius: 8px;
+    width: 200px; /* Ancho fijo del botón */
+
+}
+
+
+
+.login-form button[type="submit"]:hover {
+    background-color: var(--color-background-secondary);
+}
+
+.custom-logo2 {
+    max-width: 220px;
+}
+
+.forgot-password-link {
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+.forgot-password-link:hover {
+    text-decoration: underline;
+    color: var(--color-background-secondary);
+}
+.register-link {
+    color: var(--color-primary);
+    text-decoration: none;
+}
+.register-link:hover{
+    text-decoration: underline;
+    color: var(--color-background-secondary);
+}
+
+/* Estilos base para los inputs */
+.login-form input[type="text"],
+.login-form input[type="password"] {
+    width: 100%;
+    padding: 8px 24px;
+    border:none;
+    border-radius: 8px;
+    box-shadow: #e0e5e5 0px 2px 8px 0px ;
+    transition: border-color 0.2s ease-in-out;
+}
+
+.login-form input[type="text"]:focus,
+.login-form input[type="password"]:focus {
+    box-shadow: 0 0 0 0.2rem #d6e8e2 !important;
+    outline: none;
+}
+
+/* Estilos para cuando el mouse está sobre el input */
+.login-form input[type="email"]:hover,
+.login-form input[type="password"]:hover {
+    border-color: var(--color-font-tertiary) !important;
+}
+
+/* Estilos para el texto "Iniciar Sesión" */
+.login-form h2 {
+    font-size: 20px;
+    color:var(--color-background-secondary);
+}
+
+/* Estilos para los labels de los campos de correo electrónico y contraseña */
+.login-form label {
+    font-size: 16px;
+    color: var(--color-primary);
+}
+
+
+

@@ -18,28 +18,28 @@ class Patient(AbstractAuditModel):
         TRANSFERRED = 'Transferred'
         DECEASED = 'Deceased'
 
-    first_name = models.CharField(_('first name'), max_length=100)
-    last_name = models.CharField(_('last name'), max_length=100)
-    age = models.IntegerField(_('age'),  null=True)
-    identification = models.CharField(_('identification'), max_length=100)
-    admission_date = models.DateTimeField(_('admission date'))
-    discharge_date = models.DateTimeField(_('discharge date'), null=True, blank=True)
-    gender = models.CharField(_('gender'), choices=get_model_choices(Gender), default=Gender.OTHER)
-    status = models.CharField(_('status'), choices=get_model_choices(Status), default=Status.ADMITTED)
-    address = models.CharField(_('address'), max_length=100)
-    city = models.CharField(_('city'), max_length=100)
-    contact_number = models.CharField(_('contact number'), max_length=100, default="")
-    emergency_contact_name = models.CharField(_('emergency contact name'), max_length=100, default="")
-    emergency_contact_number = models.CharField(_('emergency contact number'), max_length=100, default="")
+    first_name = models.CharField(_('Nombres'), max_length=100)
+    last_name = models.CharField(_('Apellidos'), max_length=100)
+    age = models.IntegerField(_('Edad'),  null=True)
+    identification = models.CharField(_('Identificación'), max_length=100)
+    admission_date = models.DateTimeField(_('Fecha de admisión'))
+    discharge_date = models.DateTimeField(_('Fecha de descargo'), null=True, blank=True)
+    gender = models.CharField(_('Género'), choices=get_model_choices(Gender), default=Gender.OTHER)
+    status = models.CharField(_('Estado'), choices=get_model_choices(Status), default=Status.ADMITTED)
+    address = models.CharField(_('Dirección'), max_length=100)
+    city = models.CharField(_('Ciudad'), max_length=100)
+    contact_number = models.CharField(_('Número de contacto'), max_length=100, default="")
+    emergency_contact_name = models.CharField(_('Nombre de contacto de emergencia'), max_length=100, default="")
+    emergency_contact_number = models.CharField(_('Número de contacto de emergencia'), max_length=100, default="")
     facility = models.ForeignKey('facility.Facility', related_name='facility_patient_set', verbose_name=_('facility'),
                                  on_delete=models.CASCADE)
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, verbose_name=_('user'), null=True, blank=True,
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, verbose_name=_('Usuario'), null=True, blank=True,
                                 related_name='patient_user_set', on_delete=models.SET_NULL)
 
     attending_staff = models.ManyToManyField('staff.Staff', related_name='staff_patient_set',
-                                             verbose_name=_('attending staff'), blank=True)
+                                             verbose_name=_('Personal a cargo'), blank=True)
     alarm_settings = models.ManyToManyField('monitoring.AlarmSettings', related_name='alarm_settings_patient_set',
-                                            verbose_name=_('alarm settings'), blank=True)
+                                            verbose_name=_('Configuraciones de alarma'), blank=True)
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"

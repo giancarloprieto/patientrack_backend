@@ -22,7 +22,7 @@ INTERNAL_RESET_URL_TOKEN = 'set-password'
 # Create your views here.
 
 class RegisterView(FormView):
-    template_name = 'authentication/register/register.html'
+    template_name = 'authentication/register/register_final.html'
     form_class = RegisterForm
     success_url = reverse_lazy('authentication:register_done')
 

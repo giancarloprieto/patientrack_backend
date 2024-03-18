@@ -8,7 +8,7 @@ authentication_patterns = (
     [
         path('logout/', auth_views.LogoutView.as_view(), name='logout'),
 
-        path('login/', auth_views.LoginView.as_view(template_name='authentication/login.html'),
+        path('login/', auth_views.LoginView.as_view(template_name='authentication/login_final.html'),
              name='login'),
 
         path('password-change/', auth_views.PasswordChangeView.as_view(
