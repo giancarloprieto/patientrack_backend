@@ -2,7 +2,7 @@
 name = "patientrack-backend"
 version = "0.1.0"
 description = ""
-authors = ["giancarloprieto <edison.prieto@simetrik.com>"]
+authors = ["giancarloprieto"]
 readme = "README.md"
 packages = [{include = "patientrack_backend"}]
 
