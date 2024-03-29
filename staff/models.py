@@ -12,21 +12,21 @@ class Staff(AbstractAuditModel):
         FEMALE = 'F'
         OTHER = 'O'
 
-    first_name = models.CharField(_('first name'), max_length=100)
-    last_name = models.CharField(_('last name'), max_length=100)
-    date_of_birth = models.DateField(_('date of birth'))
-    gender = models.CharField(_('gender'), choices=get_model_choices(Gender), default=Gender.OTHER)
-    contact_number = models.CharField(_('contact number'), max_length=100, default="")
-    email = models.EmailField(_("email address"))
-    address = models.CharField(_('address'), max_length=100)
-    city = models.CharField(_('city'), max_length=100)
-    hire_date = models.DateField(_('hire date'))
-    specialization = models.CharField(_('specialization'), max_length=100)
-    identification = models.CharField(_('identification'), max_length=100)
-    is_active = models.BooleanField(_('is active'), default=True)
+    first_name = models.CharField(_('nombres'), max_length=100)
+    last_name = models.CharField(_('apellidos'), max_length=100)
+    date_of_birth = models.DateField(_('fecha de nacimiento'))
+    gender = models.CharField(_('género'), choices=get_model_choices(Gender), default=Gender.OTHER)
+    contact_number = models.CharField(_('número de contacto'), max_length=100, default="")
+    email = models.EmailField(_("correo electrónico"))
+    address = models.CharField(_('dirección'), max_length=100)
+    city = models.CharField(_('ciudad'), max_length=100)
+    hire_date = models.DateField(_('fecha de contratación'))
+    specialization = models.CharField(_('especialización'), max_length=100)
+    identification = models.CharField(_('identificación'), max_length=100)
+    is_active = models.BooleanField(_('activo'), default=True)
     facility = models.ForeignKey('facility.Facility', related_name='facility_staff_set', verbose_name=_('facility'),
                                  on_delete=models.CASCADE)
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, verbose_name=_('user'), null=True, blank=True,
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, verbose_name=_('usuario'), null=True, blank=True,
                                 related_name='staff_user_set', on_delete=models.SET_NULL)
 
     def __str__(self):

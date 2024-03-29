@@ -9,6 +9,6 @@ from main.models import AbstractAuditModel
 
 class FollowUp(AbstractAuditModel):
     patient = models.ForeignKey('patient.Patient', related_name='patient_followup_set',
-                                verbose_name=_('patient'), null=True,
+                                verbose_name=_('paciente'), null=True,
                                 on_delete=models.SET_NULL)
-    comment = models.TextField(_('comment'))
+    comment = models.TextField(_('comentario'))

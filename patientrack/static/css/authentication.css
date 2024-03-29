@@ -99,6 +99,7 @@ body {
 
 /* Estilos base para los inputs */
 .login-form input[type="text"],
+.login-form input[type="email"],
 .login-form input[type="password"] {
     width: 100%;
     padding: 8px 24px;
@@ -109,12 +110,14 @@ body {
 }
 
 .login-form input[type="text"]:focus,
+.login-form input[type="email"]:focus,
 .login-form input[type="password"]:focus {
     box-shadow: 0 0 0 0.2rem #d6e8e2 !important;
     outline: none;
 }
 
 /* Estilos para cuando el mouse está sobre el input */
+.login-form input[type="text"]:hover,
 .login-form input[type="email"]:hover,
 .login-form input[type="password"]:hover {
     border-color: var(--color-font-tertiary) !important;
